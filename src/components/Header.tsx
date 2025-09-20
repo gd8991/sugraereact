@@ -1,10 +1,14 @@
 import { useEffect, useState } from 'react';
 import type { FC } from 'react';
 import { NAVIGATION_LINKS } from '../utils/constants';
+import { useCart } from '../contexts/CartContext';
 
 const Header: FC = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const { toggleCart, getCartItemCount } = useCart();
+
+  const cartCount = getCartItemCount();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -45,9 +49,17 @@ const Header: FC = () => {
             ))}
           </ul>
 
-          <a href="#" onClick={(e) => { e.preventDefault(); scrollToSection('#vip'); }} className="nav-cta">
-            Join VIP
-          </a>
+          <div className="nav-actions">
+            <button onClick={toggleCart} className="cart-toggle">
+              <span className="cart-icon">🛍️</span>
+              {cartCount > 0 && (
+                <span className="cart-badge">{cartCount}</span>
+              )}
+            </button>
+            <a href="#" onClick={(e) => { e.preventDefault(); scrollToSection('#vip'); }} className="nav-cta">
+              Join VIP
+            </a>
+          </div>
 
           {/* Mobile Menu Toggle */}
           <div
@@ -73,9 +85,18 @@ const Header: FC = () => {
               </li>
             ))}
           </ul>
-          <a href="#" onClick={(e) => { e.preventDefault(); scrollToSection('#vip'); }} className="mobile-menu-cta">
-            Join VIP
-          </a>
+          <div className="mobile-menu-actions">
+            <button onClick={toggleCart} className="mobile-cart-toggle">
+              <span className="cart-icon">🛍️</span>
+              {cartCount > 0 && (
+                <span className="cart-badge">{cartCount}</span>
+              )}
+              <span>Cart</span>
+            </button>
+            <a href="#" onClick={(e) => { e.preventDefault(); scrollToSection('#vip'); }} className="mobile-menu-cta">
+              Join VIP
+            </a>
+          </div>
         </div>
       </div>
     </>

@@ -13,7 +13,8 @@ export const PRODUCTS: Product[] = [
     name: 'ALPHA',
     notes: 'Bergamot • White Tea • Soft Musk',
     description: 'Inspired by morning\'s first light touching a newborn\'s cheek. A gentle awakening that celebrates new beginnings with the softest touch.',
-    bottleText: 'Sugraé'
+    bottleText: 'Sugraé',
+    price: 125
   },
   {
     id: 'first-love',
@@ -21,7 +22,8 @@ export const PRODUCTS: Product[] = [
     name: 'First Love',
     notes: 'Honey • Vanilla • Sandalwood',
     description: 'The warmth of an embrace, the strength of love. Created for the woman who carries life while maintaining her golden radiance.',
-    bottleText: 'Sugraé'
+    bottleText: 'Sugraé',
+    price: 135
   },
   {
     id: 'aura',
@@ -29,7 +31,8 @@ export const PRODUCTS: Product[] = [
     name: 'AURA',
     notes: 'Rose Petals • Peach • White Cedar',
     description: 'Proof that gentleness is the ultimate luxury. A sophisticated whisper that speaks volumes without overwhelming.',
-    bottleText: 'Sugraé'
+    bottleText: 'Sugraé',
+    price: 145
   }
 ];
 

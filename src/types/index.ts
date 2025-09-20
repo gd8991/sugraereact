@@ -5,6 +5,24 @@ export interface Product {
   notes: string;
   description: string;
   bottleText: string;
+  price: number;
+}
+
+export interface CartItem {
+  product: Product;
+  quantity: number;
+}
+
+export interface CustomerInfo {
+  firstName: string;
+  lastName: string;
+  email: string;
+  phone: string;
+  address: string;
+  city: string;
+  state: string;
+  zipCode: string;
+  country: string;
 }
 
 export interface ExperienceItem {

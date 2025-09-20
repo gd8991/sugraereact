@@ -1,6 +1,6 @@
 import { useEffect, useRef } from 'react';
 import type { FC } from 'react';
-import { useGSAP } from '../hooks/useGSAP';
+import { useCart } from '../contexts/CartContext';
 import type { Product } from '../types';
 
 interface ProductCardProps {
@@ -9,45 +9,41 @@ interface ProductCardProps {
 }
 
 const ProductCard: FC<ProductCardProps> = ({ product, index }) => {
-  const { gsap, isReady } = useGSAP();
-  const cardRef = useRef<HTMLDivElement>(null);
+  const { addItem, openCart } = useCart();
 
-  useEffect(() => {
-    if (!isReady || !gsap) return;
-
-    gsap.to(cardRef.current, {
-      scrollTrigger: {
-        trigger: cardRef.current,
-        start: 'top 80%'
-      },
-      duration: 1,
-      opacity: 1,
-      y: 0,
-      ease: 'power3.out',
-      delay: index * 0.2
-    });
-
-  }, [isReady, gsap, index]);
+  const handleAddToCart = () => {
+    addItem(product);
+    openCart();
+  };
 
   return (
-    <div ref={cardRef} className="product-card">
-      {/* Product Image Section */}
-      <div className="product-image">
-        {/* Product Number */}
-        <div className="product-number">{product.number}</div>
-        
-        {/* Product Bottle */}
-        <div className="product-bottle">{product.bottleText}</div>
+    <div className="product-card">
+        {/* Product Image Section */}
+        <div className="product-image">
+          {/* Product Number */}
+          <div className="product-number">{product.number}</div>
+
+          {/* Product Bottle */}
+          <div className="product-bottle">{product.bottleText}</div>
+        </div>
+
+        {/* Product Info */}
+        <div className="product-info">
+          <h3 className="product-name">{product.name}</h3>
+          <p className="product-notes">{product.notes}</p>
+          <p className="product-description">{product.description}</p>
+          <div className="product-price">${product.price}</div>
+          <div className="product-actions">
+            <a href="#" className="product-cta product-cta-reserve">Reserve Now</a>
+            <button
+              onClick={handleAddToCart}
+              className="product-cta product-cta-cart"
+            >
+              Add to Cart
+            </button>
+          </div>
+        </div>
       </div>
-      
-      {/* Product Info */}
-      <div className="product-info">
-        <h3 className="product-name">{product.name}</h3>
-        <p className="product-notes">{product.notes}</p>
-        <p className="product-description">{product.description}</p>
-        <a href="#" className="product-cta">Reserve Now</a>
-      </div>
-    </div>
   );
 };
 

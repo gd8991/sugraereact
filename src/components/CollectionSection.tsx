@@ -1,11 +1,12 @@
 import { useEffect, useRef } from 'react';
 import type { FC } from 'react';
 import { useGSAP } from '../hooks/useGSAP';
-import { PRODUCTS } from '../utils/constants';
+import { useProducts } from '../contexts/ProductContext';
 import ProductCard from './ProductCard';
 
 const CollectionSection: FC = () => {
   const { gsap, isReady } = useGSAP();
+  const { state: { products, isLoading, error, isShopifyData } } = useProducts();
   const titleRef = useRef<HTMLHeadingElement>(null);
 
   useEffect(() => {
@@ -34,11 +35,32 @@ const CollectionSection: FC = () => {
 
       {/* Products Showcase */}
       <div className="products-showcase">
-        <div className="product-grid">
-          {PRODUCTS.map((product, index) => (
-            <ProductCard key={product.id} product={product} index={index} />
-          ))}
-        </div>
+        {isLoading ? (
+          <div className="loading-state">
+            <div className="loading-spinner"></div>
+            <p className="loading-text">Loading our exquisite collection...</p>
+          </div>
+        ) : error ? (
+          <div className="error-state">
+            <p className="error-text">Unable to load products. Showing our signature collection.</p>
+            <div className="product-grid">
+              {products.map((product, index) => (
+                <ProductCard key={product.id} product={product} index={index} />
+              ))}
+            </div>
+          </div>
+        ) : (
+          <div className="product-grid">
+            {products.map((product, index) => (
+              <ProductCard key={product.id} product={product} index={index} />
+            ))}
+            {isShopifyData && (
+              <div className="shopify-indicator">
+                <small>✨ Live data from Shopify</small>
+              </div>
+            )}
+          </div>
+        )}
       </div>
     </section>
   );

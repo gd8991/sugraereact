@@ -17,6 +17,9 @@ const ProductModal: FC<ProductModalProps> = ({ product, isOpen, onClose }) => {
   const modalRef = useRef<HTMLDivElement>(null);
   const overlayRef = useRef<HTMLDivElement>(null);
 
+  // Debug logging
+  console.log('ProductModal render:', { product: product?.name, isOpen, isReady });
+
   useEffect(() => {
     if (!isReady || !gsap) return;
 

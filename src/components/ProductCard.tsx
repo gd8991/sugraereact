@@ -19,6 +19,7 @@ const ProductCard: FC<ProductCardProps> = ({ product }) => {
   };
 
   const openModal = () => {
+    console.log('Opening modal for product:', product.name);
     setIsModalOpen(true);
   };
 
@@ -51,8 +52,12 @@ const ProductCard: FC<ProductCardProps> = ({ product }) => {
             <div className="product-description-container">
               <p className="product-description">{truncateText(product.description, 80)}</p>
               {product.description.length > 80 && (
-                <button onClick={openModal} className="read-more-btn">
-                  Read More
+                <button
+                  onClick={openModal}
+                  className="read-more-btn"
+                  style={{ backgroundColor: isModalOpen ? 'red' : 'transparent' }}
+                >
+                  {isModalOpen ? 'Modal Open' : 'Read More'}
                 </button>
               )}
             </div>

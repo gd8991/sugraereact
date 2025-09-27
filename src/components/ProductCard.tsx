@@ -1,4 +1,3 @@
-import { useEffect, useRef } from 'react';
 import type { FC } from 'react';
 import { useCart } from '../contexts/CartContext';
 import type { Product } from '../types';
@@ -8,7 +7,7 @@ interface ProductCardProps {
   index: number;
 }
 
-const ProductCard: FC<ProductCardProps> = ({ product, index }) => {
+const ProductCard: FC<ProductCardProps> = ({ product }) => {
   const { addItem, openCart } = useCart();
 
   const handleAddToCart = () => {

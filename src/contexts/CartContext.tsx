@@ -1,5 +1,6 @@
 import { createContext, useContext, useReducer, ReactNode } from 'react';
 import type { CartItem, Product } from '../types';
+import { redirectToShopifyCheckout } from '../utils/shopify';
 
 interface CartState {
   items: CartItem[];
@@ -149,7 +150,13 @@ export const CartProvider = ({ children }: { children: ReactNode }) => {
   };
 
   const openCheckout = () => {
-    dispatch({ type: 'OPEN_CHECKOUT' });
+    if (state.items.length === 0) {
+      alert('Your cart is empty. Please add some items before proceeding to checkout.');
+      return;
+    }
+
+    redirectToShopifyCheckout(state.items);
+    dispatch({ type: 'CLOSE_CART' });
   };
 
   const closeCheckout = () => {

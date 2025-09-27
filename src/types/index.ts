@@ -6,6 +6,7 @@ export interface Product {
   description: string;
   bottleText: string;
   price: number;
+  shopifyVariantId?: string;
 }
 
 export interface CartItem {

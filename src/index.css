@@ -808,6 +808,7 @@ nav {
     gap: 3rem;
     max-width: 1400px;
     margin: 0 auto;
+    justify-items: center;
 }
 
 .product-card {

@@ -54,11 +54,6 @@ const CollectionSection: FC = () => {
             {products.map((product, index) => (
               <ProductCard key={product.id} product={product} index={index} />
             ))}
-            {isShopifyData && (
-              <div className="shopify-indicator">
-                <small>✨ Live data from Shopify</small>
-              </div>
-            )}
           </div>
         )}
       </div>

@@ -30,6 +30,7 @@ export interface ExperienceItem {
   icon: string;
   label: string;
   text: string;
+  image: string;
 }
 
 export interface VIPBenefit {

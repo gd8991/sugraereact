@@ -43,22 +43,32 @@ export const EXPERIENCE_ITEMS: ExperienceItem[] = [
   {
     icon: '🤰',
     label: 'GENTLE',
-    text: 'Safe for pregnancy & sensitive skin'
+    text: 'Crafted with the utmost care for expectant mothers, our fragrances use only the finest natural ingredients that are completely safe during pregnancy. Every note is carefully selected to provide a luxurious experience without any harmful chemicals or overwhelming intensity.',
+    image: '/placeholder-gentle.jpg'
   },
   {
     icon: '👶',
     label: 'BABY-SAFE',
-    text: 'Mild enough for mothers & newborns'
+    text: 'Our revolutionary formula is so gentle and pure that it\'s safe to wear around newborns and infants. The subtle, non-invasive scent profile ensures that both mother and baby can enjoy the beautiful fragrance without any concerns about sensitivity or overpowering aromas.',
+    image: '/placeholder-baby-safe.jpg'
   },
   {
     icon: '💎',
     label: 'LUXURIOUS',
-    text: 'Premium ingredients, zero compromise'
+    text: 'We believe that luxury shouldn\'t be compromised during motherhood. Each fragrance is created using premium ingredients sourced from the finest perfume houses around the world. The sophisticated blend delivers an opulent experience that makes every moment feel special.',
+    image: '/placeholder-luxurious.jpg'
   },
   {
     icon: '⏰',
     label: 'LONG-LASTING',
-    text: '12+ hours of gentle elegance'
+    text: 'Experience up to 12 hours of gentle, consistent fragrance that evolves beautifully throughout the day. Our solid perfume technology ensures that the scent stays close to your skin, creating an intimate and personal fragrance experience that lasts from morning to night.',
+    image: '/placeholder-long-lasting.jpg'
+  },
+  {
+    icon: '🌿',
+    label: 'SUSTAINABLE',
+    text: 'Our commitment to the environment matches our commitment to mothers. Every ingredient is ethically sourced, our packaging is eco-friendly and recyclable, and our production process minimizes environmental impact. Beautiful fragrances that care for your family and the planet.',
+    image: '/placeholder-sustainable.jpg'
   }
 ];
 

@@ -2,15 +2,21 @@ import { useEffect, useRef } from 'react';
 import type { FC } from 'react';
 import { useGSAP } from '../hooks/useGSAP';
 import { EXPERIENCE_ITEMS } from '../utils/constants';
-import ExperienceItem from './ExperienceItem';
 
 const ExperienceSection: FC = () => {
   const { gsap, isReady } = useGSAP();
+  const sectionRef = useRef<HTMLElement>(null);
+  const containerRef = useRef<HTMLDivElement>(null);
   const titleRef = useRef<HTMLHeadingElement>(null);
+  const itemRefs = useRef<HTMLDivElement[]>([]);
 
   useEffect(() => {
     if (!isReady || !gsap) return;
 
+    const items = itemRefs.current.filter(Boolean);
+    if (!items.length) return;
+
+    // Title animation
     gsap.from(titleRef.current, {
       scrollTrigger: {
         trigger: titleRef.current,
@@ -22,26 +28,84 @@ const ExperienceSection: FC = () => {
       ease: 'power3.out'
     });
 
+    // Set initial states - hide all items except first
+    gsap.set(items, { opacity: 0, y: 0 });
+    if (items[0]) {
+      gsap.set(items[0], { opacity: 1, y: 0 });
+    }
+
+    // Only create pinned scroll if we have items
+    if (items.length > 1) {
+      // Create timeline for section transitions
+      const tl = gsap.timeline({
+        scrollTrigger: {
+          trigger: sectionRef.current,
+          start: 'top top',
+          end: `+=${items.length * 100}%`,
+          scrub: 1,
+          pin: true,
+          anticipatePin: 1,
+          refreshPriority: -1
+        }
+      });
+
+      // Animate through each section
+      items.forEach((item, index) => {
+        if (index === 0) return; // First item is already visible
+
+        const prevIndex = index - 1;
+        const timePosition = index * 1;
+
+        tl.to(items[prevIndex], {
+          opacity: 0,
+          y: -50,
+          duration: 0.3,
+          ease: 'power2.inOut'
+        }, timePosition)
+        .to(item, {
+          opacity: 1,
+          y: 0,
+          duration: 0.3,
+          ease: 'power2.inOut'
+        }, timePosition + 0.3);
+      });
+    }
+
   }, [isReady, gsap]);
 
   return (
-    <section className="experience-section" id="experience">
-      <div className="experience-container">
+    <section ref={sectionRef} className="experience-section experience-pinned" id="experience">
+      <div ref={containerRef} className="experience-container">
         <h2 ref={titleRef} className="experience-title">THE Sugraé PROMISE</h2>
-        
+
         <p style={{ fontFamily: 'var(--font-serif)', fontSize: '1.25rem', color: 'var(--gold)', marginBottom: '3rem', fontStyle: 'italic' }}>
           Luxury redefined for life's most precious moments
         </p>
-        
-        <div className="experience-grid">
+
+        <div className="experience-pinned-content">
           {EXPERIENCE_ITEMS.map((item, index) => (
-            <ExperienceItem key={item.label} item={item} index={index} />
+            <div
+              key={item.label}
+              ref={el => {
+                if (el) itemRefs.current[index] = el;
+              }}
+              className={`experience-item-pinned ${index % 2 === 0 ? 'image-left' : 'image-right'}`}
+            >
+              <div className="experience-image">
+                <img src={item.image} alt={item.label} />
+                <div className="experience-icon-overlay">{item.icon}</div>
+              </div>
+              <div className="experience-content">
+                <h3 className="experience-label">{item.label}</h3>
+                <p className="experience-text">{item.text}</p>
+              </div>
+            </div>
           ))}
         </div>
-        
+
         <div style={{ maxWidth: '800px', margin: '4rem auto 0', textAlign: 'center' }}>
           <p style={{ fontSize: '1.125rem', lineHeight: 1.8, color: 'var(--light-gray)', fontFamily: 'var(--font-serif)' }}>
-            "Every Sugraé perfume is a testament to the belief that motherhood doesn't mean 
+            "Every Sugraé perfume is a testament to the belief that motherhood doesn't mean
             sacrificing elegance. It means redefining it."
           </p>
         </div>

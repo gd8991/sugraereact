@@ -122,7 +122,6 @@ const ProductModal: FC<ProductModalProps> = ({ product, isOpen, onClose }) => {
               <div className="modal-product-header">
                 <h2 className="modal-product-name">{product.name}</h2>
                 <div className="modal-product-divider"></div>
-                <p className="modal-product-notes">{product.notes}</p>
               </div>
 
               <div className="modal-product-description">
@@ -144,10 +143,7 @@ const ProductModal: FC<ProductModalProps> = ({ product, isOpen, onClose }) => {
                     className="modal-btn modal-btn-primary"
                   >
                     <span>Add to Cart</span>
-                  </button>
-                  <a href="#" className="modal-btn modal-btn-secondary">
-                    <span>Reserve Now</span>
-                  </a>
+                  </button>                 
                 </div>
               </div>
             </div>

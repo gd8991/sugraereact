@@ -6,7 +6,7 @@ import ProductCard from './ProductCard';
 
 const CollectionSection: FC = () => {
   const { gsap, isReady } = useGSAP();
-  const { state: { products, isLoading, error, isShopifyData } } = useProducts();
+  const { state: { products, isLoading, error } } = useProducts();
   const titleRef = useRef<HTMLHeadingElement>(null);
 
   useEffect(() => {

@@ -1520,6 +1520,11 @@ nav {
 /* Custom Scrollbar */
 ::-webkit-scrollbar {
     width: 8px;
+    height: 0px; /* Hide horizontal scrollbar */
+}
+
+::-webkit-scrollbar:horizontal {
+    display: none; /* Hide horizontal scrollbar completely */
 }
 
 ::-webkit-scrollbar-track {
@@ -1541,6 +1546,11 @@ nav {
 * {
     scrollbar-width: thin;
     scrollbar-color: var(--gold) var(--pure-black);
+}
+
+/* Hide horizontal scrollbar globally */
+html, body {
+    overflow-x: hidden;
 }
 
 /* Footer - Minimal Luxe */

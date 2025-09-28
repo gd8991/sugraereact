@@ -41,7 +41,7 @@ const ExperienceSection: FC = () => {
         scrollTrigger: {
           trigger: sectionRef.current,
           start: 'top top',
-          end: `+=${items.length * 100}%`,
+          end: `+=${items.length * 50}%`,
           scrub: 1,
           pin: true,
           anticipatePin: 1,
@@ -76,11 +76,9 @@ const ExperienceSection: FC = () => {
   return (
     <section ref={sectionRef} className="experience-section experience-pinned" id="experience">
       <div ref={containerRef} className="experience-container">
-        <h2 ref={titleRef} className="experience-title">THE Sugraé PROMISE</h2>
-
-        <p style={{ fontFamily: 'var(--font-serif)', fontSize: '1.25rem', color: 'var(--gold)', marginBottom: '3rem', fontStyle: 'italic' }}>
-          Luxury redefined for life's most precious moments
-        </p>
+        <div className="experience-header">
+          <h2 ref={titleRef} className="experience-title">THE Sugraé PROMISE</h2>
+        </div>
 
         <div className="experience-pinned-content">
           {EXPERIENCE_ITEMS.map((item, index) => (
@@ -103,7 +101,7 @@ const ExperienceSection: FC = () => {
           ))}
         </div>
 
-        <div style={{ maxWidth: '800px', margin: '4rem auto 0', textAlign: 'center' }}>
+        <div style={{ maxWidth: '800px', margin: '4rem auto -4rem', textAlign: 'center' }}>
           <p style={{ fontSize: '1.125rem', lineHeight: 1.8, color: 'var(--light-gray)', fontFamily: 'var(--font-serif)' }}>
             "Every Sugraé perfume is a testament to the belief that motherhood doesn't mean
             sacrificing elegance. It means redefining it."

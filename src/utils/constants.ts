@@ -43,31 +43,31 @@ export const EXPERIENCE_ITEMS: ExperienceItem[] = [
   {
     icon: '🤰',
     label: 'GENTLE',
-    text: 'Crafted with the utmost care for expectant mothers, our fragrances use only the finest natural ingredients that are completely safe during pregnancy. Every note is carefully selected to provide a luxurious experience without any harmful chemicals or overwhelming intensity.',
+    text: 'Our perfumes are crafted with a delicate balance of notes that linger softly on the skin, offering a refined presence without ever overwhelming. Each fragrance unfolds gracefully, ensuring that every spray feels light, smooth, and perfectly suited for daily wear. Designed for comfort and elegance, these scents become an effortless part of your routine, leaving a subtle trail of sophistication wherever you go. Gentle yet captivating, our perfumes embody the art of understated luxury.',
     image: '/placeholder-gentle.jpg'
   },
   {
     icon: '👶',
     label: 'BABY-SAFE',
-    text: 'Our revolutionary formula is so gentle and pure that it\'s safe to wear around newborns and infants. The subtle, non-invasive scent profile ensures that both mother and baby can enjoy the beautiful fragrance without any concerns about sensitivity or overpowering aromas.',
+    text: 'Purity meets safety in every bottle. Our formulations are carefully designed with premium, skin-friendly ingredients that prioritize your well-being. Free from harsh elements, the perfumes offer a clean, breathable fragrance experience that feels safe even around little ones. This makes them a trusted choice for modern lifestyles where comfort, care, and responsibility are valued as much as elegance. With baby-safe compositions, you can embrace a fragrance that reflects not just your style, but also your commitment to gentleness and safety.',
     image: '/placeholder-baby-safe.jpg'
   },
   {
     icon: '💎',
     label: 'LUXURIOUS',
-    text: 'We believe that luxury shouldn\'t be compromised during motherhood. Each fragrance is created using premium ingredients sourced from the finest perfume houses around the world. The sophisticated blend delivers an opulent experience that makes every moment feel special.',
+    text: 'Step into a world where every detail exudes refinement. Our perfumes are more than scents—they are experiences, created with the finest ingredients sourced globally and blended by master perfumers. Each fragrance is layered with richness, depth, and a timeless aura that captures the essence of true indulgence. From the very first spritz, you’ll discover elegance that feels both classic and contemporary. With packaging that mirrors the artistry inside, our perfumes embody luxury that can be felt, seen, and remembered.',
     image: '/placeholder-luxurious.jpg'
   },
   {
     icon: '⏰',
     label: 'LONG-LASTING',
-    text: 'Experience up to 12 hours of gentle, consistent fragrance that evolves beautifully throughout the day. Our solid perfume technology ensures that the scent stays close to your skin, creating an intimate and personal fragrance experience that lasts from morning to night.',
+    text: 'Endurance is the hallmark of true craftsmanship. Our perfumes are designed to stay with you from morning to night, evolving with the rhythm of your day. Each fragrance is meticulously composed to ensure lasting power without compromising on quality or refinement. The notes remain vibrant and balanced, offering a consistent aura that feels fresh and sophisticated for hours on end. With long-lasting performance, every moment becomes an opportunity to leave a memorable impression—effortlessly elegant, always present.',
     image: '/placeholder-long-lasting.jpg'
   },
   {
     icon: '🌿',
     label: 'SUSTAINABLE',
-    text: 'Our commitment to the environment matches our commitment to mothers. Every ingredient is ethically sourced, our packaging is eco-friendly and recyclable, and our production process minimizes environmental impact. Beautiful fragrances that care for your family and the planet.',
+    text: 'True luxury embraces responsibility. Our perfumes are thoughtfully created with sustainability at the heart of every step—from ethically sourced ingredients to eco-conscious packaging. We believe beauty should never come at the expense of the planet, which is why each fragrance reflects a commitment to both elegance and environmental care. By choosing our perfumes, you celebrate not only refined craftsmanship but also a mindful lifestyle. Every bottle is a testament to harmony between indulgence and integrity, proving that sophistication and sustainability can coexist beautifully.',
     image: '/placeholder-sustainable.jpg'
   }
 ];

@@ -2,6 +2,7 @@ import { useEffect, useRef } from 'react';
 import type { FC } from 'react';
 import { useCart } from '../contexts/CartContext';
 import { useGSAP } from '../hooks/useGSAP';
+import cartIcon from '../assets/cart.png';
 
 const CartSidebar: FC = () => {
   const {
@@ -79,7 +80,9 @@ const CartSidebar: FC = () => {
         <div className="cart-content">
           {state.items.length === 0 ? (
             <div className="cart-empty">
-              <div className="cart-empty-icon">🛍️</div>
+              <div className="cart-empty-icon">
+                <img src={cartIcon} alt="Empty Cart" width="48" height="48" />
+              </div>
               <p className="cart-empty-text">Your cart is empty</p>
               <p className="cart-empty-subtext">Add some luxurious fragrances to get started</p>
             </div>

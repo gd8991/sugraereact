@@ -48,7 +48,7 @@ const ProductCard: FC<ProductCardProps> = ({ product }) => {
           {/* Product Info */}
           <div className="product-info">
             <h3 className="product-name">{product.name}</h3>
-            <p className="product-notes">{product.notes}</p>
+            
             <div className="product-description-container">
               <p className="product-description">{truncateText(product.description, 80)}</p>
               {product.description.length > 80 && (
@@ -63,7 +63,7 @@ const ProductCard: FC<ProductCardProps> = ({ product }) => {
             </div>
             <div className="product-price">${product.price}</div>
             <div className="product-actions">
-              <a href="#" className="product-cta product-cta-reserve">Reserve Now</a>
+              
               <button
                 onClick={handleAddToCart}
                 className="product-cta product-cta-cart"

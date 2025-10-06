@@ -84,7 +84,7 @@ const CartSidebar: FC = () => {
                 <img src={cartIcon} alt="Empty Cart" width="48" height="48" />
               </div>
               <p className="cart-empty-text">Your cart is empty</p>
-              <p className="cart-empty-subtext">Add some luxurious fragrances to get started</p>
+              <p className="cart-empty-subtext">Add some fragrances to get started</p>
             </div>
           ) : (
             <>

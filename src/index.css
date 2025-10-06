@@ -1419,7 +1419,7 @@ nav {
     display: flex;
     flex-direction: column;
     height: 100vh;
-    padding-top: 4rem;
+    padding-top: 1rem;
     max-width: none;
     width: 100%;
 }

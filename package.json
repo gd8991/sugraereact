@@ -3,6 +3,7 @@
   "private": true,
   "version": "0.0.0",
   "type": "module",
+  "homepage": "https://gd8991.github.io/sugraereact",
   "scripts": {
     "dev": "vite",
     "build": "tsc -b && vite build",

@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { CartProvider } from './contexts/CartContext';
 import { ProductProvider } from './contexts/ProductContext';
+import { RegionProvider } from './contexts/RegionContext';
 import CustomCursor from './components/CustomCursor';
 import Loader from './components/Loader';
 import Header from './components/Header';
@@ -21,25 +22,27 @@ function App() {
 
 
   return (
-    <ProductProvider>
-      <CartProvider>
-        <div className="App">
-          <CustomCursor />
+    <RegionProvider>
+      <ProductProvider>
+        <CartProvider>
+          <div className="App">
+            <CustomCursor />
 
-          {isLoading && <Loader onLoadComplete={handleLoadComplete} />}
+            {isLoading && <Loader onLoadComplete={handleLoadComplete} />}
 
-          <Header />
-          <Hero />
-          <FounderSection />
-          <CollectionSection />
-          <ExperienceSection />
-          <Footer />
+            <Header />
+            <Hero />
+            <FounderSection />
+            <CollectionSection />
+            <ExperienceSection />
+            <Footer />
 
-          <CartSidebar />
-          <GuestCheckout />
-        </div>
-      </CartProvider>
-    </ProductProvider>
+            <CartSidebar />
+            <GuestCheckout />
+          </div>
+        </CartProvider>
+      </ProductProvider>
+    </RegionProvider>
   );
 }
 

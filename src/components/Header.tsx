@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import type { FC } from 'react';
 import { NAVIGATION_LINKS } from '../utils/constants';
 import { useCart } from '../contexts/CartContext';
+import RegionSelector from './RegionSelector';
 import cartIcon from '../assets/cart.png';
 
 const Header: FC = () => {
@@ -51,12 +52,13 @@ const Header: FC = () => {
           </ul>
 
           <div className="nav-actions">
+            <RegionSelector />
             <button onClick={toggleCart} className="cart-toggle">
               <img src={cartIcon} alt="Cart" className="cart-icon" width="24" height="24" />
               {cartCount > 0 && (
                 <span className="cart-badge">{cartCount}</span>
               )}
-            </button>           
+            </button>
           </div>
 
           {/* Mobile Menu Toggle */}
@@ -84,13 +86,14 @@ const Header: FC = () => {
             ))}
           </ul>
           <div className="mobile-menu-actions">
+            <RegionSelector />
             <button onClick={toggleCart} className="mobile-cart-toggle">
               <img src={cartIcon} alt="Cart" className="cart-icon" width="24" height="24" />
               {cartCount > 0 && (
                 <span className="cart-badge">{cartCount}</span>
               )}
               <span>Cart</span>
-            </button>           
+            </button>
           </div>
         </div>
       </div>

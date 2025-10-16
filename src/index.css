@@ -300,6 +300,87 @@ nav {
     gap: 1.5rem;
 }
 
+/* Region Selector */
+.region-selector {
+    position: relative;
+    z-index: 100;
+}
+
+.region-selector-toggle {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: transparent;
+    border: 1px solid var(--gold);
+    color: var(--gold);
+    padding: 0.5rem 1rem;
+    font-size: 0.8rem;
+    font-family: var(--font-body);
+    letter-spacing: 0.1rem;
+    text-transform: uppercase;
+    cursor: none;
+    transition: var(--transition);
+}
+
+.region-selector-toggle:hover {
+    background: rgba(212, 175, 55, 0.1);
+    transform: translateY(-2px);
+}
+
+.region-selector-text {
+    font-weight: 500;
+}
+
+.region-selector-arrow {
+    transition: transform 0.3s ease;
+}
+
+.region-selector-arrow.open {
+    transform: rotate(180deg);
+}
+
+.region-selector-dropdown {
+    position: absolute;
+    top: calc(100% + 0.5rem);
+    right: 0;
+    background: var(--midnight);
+    border: 1px solid var(--gold);
+    min-width: 150px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.8);
+    z-index: 1000;
+}
+
+.region-option {
+    width: 100%;
+    padding: 0.8rem 1rem;
+    background: transparent;
+    border: none;
+    color: var(--white);
+    font-size: 0.8rem;
+    font-family: var(--font-body);
+    letter-spacing: 0.1rem;
+    text-transform: uppercase;
+    text-align: left;
+    cursor: none;
+    transition: var(--transition);
+    border-bottom: 1px solid rgba(212, 175, 55, 0.1);
+}
+
+.region-option:last-child {
+    border-bottom: none;
+}
+
+.region-option:hover {
+    background: rgba(212, 175, 55, 0.1);
+    color: var(--gold);
+}
+
+.region-option.active {
+    background: rgba(212, 175, 55, 0.15);
+    color: var(--gold);
+    font-weight: 600;
+}
+
 .cart-toggle {
     position: relative;
     background: transparent;

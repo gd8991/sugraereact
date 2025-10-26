@@ -1,4 +1,4 @@
-import { createContext, useContext, useEffect, useState, ReactNode } from 'react';
+import { createContext, useContext, useEffect, useState, type ReactNode } from 'react';
 import type { Product } from '../types';
 import { PRODUCTS } from '../utils/constants'; // Fallback products
 import { shopifyAPI, testShopifyConnection } from '../services/shopify';

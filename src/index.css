@@ -2418,10 +2418,34 @@ footer {
     .experience-content { text-align: center; }
     .experience-content .experience-label { font-size: 2rem; }
 
+    /* Disable pinned layout on mobile to prevent auto-scroll issues */
+    .experience-section.experience-pinned {
+        height: auto;
+        overflow: visible;
+    }
+
+    .experience-section.experience-pinned .experience-container {
+        height: auto;
+        padding-top: 4rem;
+    }
+
+    .experience-pinned-content {
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        gap: 4rem;
+        padding: 2rem;
+    }
+
     .experience-item-pinned {
+        position: relative !important;
+        transform: none !important;
+        opacity: 1 !important;
         grid-template-columns: 1fr !important;
         gap: 2rem;
-        padding: 0 2rem;
+        padding: 0;
+        width: 100%;
+        left: auto;
     }
     .experience-item-pinned.image-right,
     .experience-item-pinned.image-left {

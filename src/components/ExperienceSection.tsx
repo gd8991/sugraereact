@@ -16,6 +16,9 @@ const ExperienceSection: FC = () => {
     const items = itemRefs.current.filter(Boolean);
     if (!items.length) return;
 
+    // Check if mobile device
+    const isMobile = window.innerWidth <= 768;
+
     // Title animation
     gsap.from(titleRef.current, {
       scrollTrigger: {
@@ -28,13 +31,32 @@ const ExperienceSection: FC = () => {
       ease: 'power3.out'
     });
 
-    // Set initial states - hide all items except first
+    // On mobile, use simple fade-in animations instead of pinning
+    if (isMobile) {
+      items.forEach((item, index) => {
+        gsap.from(item, {
+          scrollTrigger: {
+            trigger: item,
+            start: 'top 80%',
+            toggleActions: 'play none none none'
+          },
+          duration: 0.8,
+          y: 30,
+          opacity: 0,
+          ease: 'power3.out',
+          delay: index * 0.1
+        });
+      });
+      return;
+    }
+
+    // Desktop: Set initial states - hide all items except first
     gsap.set(items, { opacity: 0, y: 0 });
     if (items[0]) {
       gsap.set(items[0], { opacity: 1, y: 0 });
     }
 
-    // Only create pinned scroll if we have items
+    // Only create pinned scroll on desktop if we have items
     if (items.length > 1) {
       // Create timeline for section transitions
       const tl = gsap.timeline({

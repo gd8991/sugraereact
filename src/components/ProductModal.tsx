@@ -89,6 +89,12 @@ const ProductModal: FC<ProductModalProps> = ({ product, isOpen, onClose }) => {
     }
   };
 
+  const openProductPage = () => {
+    const basePath = import.meta.env.VITE_BASE_PATH || '/';
+    const productUrl = `${basePath}${basePath.endsWith('/') ? '' : '/'}product/${product.id}`;
+    window.open(productUrl, '_blank');
+  };
+
   if (!product) return null;
 
   return createPortal(
@@ -139,11 +145,17 @@ const ProductModal: FC<ProductModalProps> = ({ product, isOpen, onClose }) => {
 
                 <div className="modal-product-actions">
                   <button
+                    onClick={openProductPage}
+                    className="modal-btn modal-btn-secondary"
+                  >
+                    <span>View Full Details</span>
+                  </button>
+                  <button
                     onClick={handleAddToCart}
                     className="modal-btn modal-btn-primary"
                   >
                     <span>Add to Cart</span>
-                  </button>                 
+                  </button>
                 </div>
               </div>
             </div>

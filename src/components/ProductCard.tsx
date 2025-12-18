@@ -27,6 +27,12 @@ const ProductCard: FC<ProductCardProps> = ({ product }) => {
     setIsModalOpen(false);
   };
 
+  const openProductPage = () => {
+    const basePath = import.meta.env.VITE_BASE_PATH || '/';
+    const productUrl = `${basePath}${basePath.endsWith('/') ? '' : '/'}product/${product.id}`;
+    window.open(productUrl, '_blank');
+  };
+
   // Truncate description for card display
   const truncateText = (text: string, maxLength: number) => {
     if (text.length <= maxLength) return text;
@@ -63,7 +69,12 @@ const ProductCard: FC<ProductCardProps> = ({ product }) => {
             </div>
             <div className="product-price">${product.price}</div>
             <div className="product-actions">
-              
+              <button
+                onClick={openProductPage}
+                className="product-cta product-cta-reserve"
+              >
+                View Details
+              </button>
               <button
                 onClick={handleAddToCart}
                 className="product-cta product-cta-cart"

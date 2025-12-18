@@ -4,6 +4,7 @@ import { NAVIGATION_LINKS } from '../utils/constants';
 import { useCart } from '../contexts/CartContext';
 import RegionSelector from './RegionSelector';
 import cartIcon from '../assets/cart.png';
+import logo from '../assets/AW_SD_Sugrae_Logo file-01.svg';
 
 const Header: FC = () => {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -37,7 +38,7 @@ const Header: FC = () => {
       <header className={isScrolled ? 'scrolled' : ''}>
         <nav>
           <button onClick={() => scrollToSection('#home')} className="logo">
-            Sugraé
+            <img src={logo} alt="Sugraé" className="logo-image" />
           </button>
 
           {/* Desktop Navigation */}

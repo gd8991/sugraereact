@@ -2,6 +2,7 @@ import { useEffect, useRef } from 'react';
 import type { FC } from 'react';
 import { useGSAP } from '../hooks/useGSAP';
 import FloatingParticles from './FloatingParticles';
+import logo from '../assets/AW_SD_Sugrae_Logo file-01.svg';
 
 const Hero: FC = () => {
   const { gsap, isReady } = useGSAP();
@@ -83,10 +84,10 @@ const Hero: FC = () => {
     <section ref={heroRef} className="hero" id="home">
       {/* Video Background */}
       <div ref={videoRef} className="hero-video">
-        <div 
+        <div
           className="video-element"
           style={{
-            background: 'linear-gradient(135deg, #0A0A0A, #1a1a1a)',
+            background: '#FFFFFF',
             height: '100%'
           }}
         />
@@ -103,7 +104,7 @@ const Hero: FC = () => {
         </div>
 
         <h1 ref={titleRef} className="hero-title">
-          Sugraé
+          <img src={logo} alt="Sugraé" className="hero-logo" />
         </h1>
 
         <p ref={taglineRef} className="hero-tagline">

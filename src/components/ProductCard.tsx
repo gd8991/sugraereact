@@ -1,8 +1,7 @@
-import { useState } from 'react';
 import type { FC } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { useCart } from '../contexts/CartContext';
 import type { Product } from '../types';
-import ProductModal from './ProductModal';
 
 interface ProductCardProps {
   product: Product;
@@ -10,27 +9,16 @@ interface ProductCardProps {
 }
 
 const ProductCard: FC<ProductCardProps> = ({ product }) => {
+  const navigate = useNavigate();
   const { addItem, openCart } = useCart();
-  const [isModalOpen, setIsModalOpen] = useState(false);
 
   const handleAddToCart = () => {
     addItem(product);
     openCart();
   };
 
-  const openModal = () => {
-    console.log('Opening modal for product:', product.name);
-    setIsModalOpen(true);
-  };
-
-  const closeModal = () => {
-    setIsModalOpen(false);
-  };
-
   const openProductPage = () => {
-    const basePath = import.meta.env.VITE_BASE_PATH || '/';
-    const productUrl = `${basePath}${basePath.endsWith('/') ? '' : '/'}product/${product.id}`;
-    window.open(productUrl, '_blank');
+    navigate(`/product/${product.id}`);
   };
 
   // Truncate description for card display
@@ -54,18 +42,9 @@ const ProductCard: FC<ProductCardProps> = ({ product }) => {
           {/* Product Info */}
           <div className="product-info">
             <h3 className="product-name">{product.name}</h3>
-            
+
             <div className="product-description-container">
               <p className="product-description">{truncateText(product.description, 80)}</p>
-              {product.description.length > 80 && (
-                <button
-                  onClick={openModal}
-                  className="read-more-btn"
-                  style={{ backgroundColor: isModalOpen ? 'red' : 'transparent' }}
-                >
-                  {isModalOpen ? 'Modal Open' : 'Read More'}
-                </button>
-              )}
             </div>
             <div className="product-price">${product.price}</div>
             <div className="product-actions">
@@ -84,12 +63,6 @@ const ProductCard: FC<ProductCardProps> = ({ product }) => {
             </div>
           </div>
         </div>
-
-        <ProductModal
-          product={product}
-          isOpen={isModalOpen}
-          onClose={closeModal}
-        />
     </>
   );
 };

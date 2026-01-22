@@ -18,9 +18,19 @@ const ProductDetailsPage = () => {
   const [product, setProduct] = useState<Product | null>(null);
   const [quantity, setQuantity] = useState(1);
   const [activeAccordion, setActiveAccordion] = useState<number | null>(null);
+  const [selectedImageIndex, setSelectedImageIndex] = useState(0);
   const pageRef = useRef<HTMLDivElement>(null);
   const imageRef = useRef<HTMLDivElement>(null);
   const contentRef = useRef<HTMLDivElement>(null);
+
+  // Mock product images - in real app, these would come from product data
+  const productImages = [
+    '/src/assets/image1.webp',
+    '/src/assets/image1.webp', // Placeholder - would be different images
+    '/src/assets/image1.webp',
+    '/src/assets/image1.webp',
+    '/src/assets/image1.webp',
+  ];
 
   useEffect(() => {
     if (products.length > 0 && productId) {
@@ -94,35 +104,31 @@ const ProductDetailsPage = () => {
 
         {/* Main Content */}
         <div className="product-details-container">
-          {/* Left Side - Product Image */}
+          {/* Left Side - Product Image Gallery */}
           <div className="product-details-left" ref={imageRef}>
-            <div className="product-details-image">
-              <div className="product-details-number">{product.number}</div>
-              <div className="product-details-bottle">{product.bottleText}</div>
-            </div>
+            <div className="product-gallery">
+              {/* Thumbnail Strip */}
+              <div className="gallery-thumbnails">
+                {productImages.map((image, index) => (
+                  <div
+                    key={index}
+                    className={`gallery-thumbnail ${selectedImageIndex === index ? 'active' : ''}`}
+                    onClick={() => setSelectedImageIndex(index)}
+                  >
+                    <img src={image} alt={`${product.name} view ${index + 1}`} />
+                  </div>
+                ))}
+              </div>
 
-            {/* Product Features */}
-            <div className="product-features">
-              <div className="feature-item">
-                <div className="feature-icon">✦</div>
-                <div className="feature-text">
-                  <h4>Premium Quality</h4>
-                  <p>Crafted with the finest ingredients</p>
-                </div>
-              </div>
-              <div className="feature-item">
-                <div className="feature-icon">♦</div>
-                <div className="feature-text">
-                  <h4>Long-lasting</h4>
-                  <p>Signature scent that endures</p>
-                </div>
-              </div>
-              <div className="feature-item">
-                <div className="feature-icon">✧</div>
-                <div className="feature-text">
-                  <h4>Limited Edition</h4>
-                  <p>Exclusive collection pieces</p>
-                </div>
+              {/* Main Image */}
+              <div className="gallery-main-image">
+                <div className="product-details-number">{product.number}</div>
+                <div className="product-details-bottle">{product.bottleText}</div>
+                <img
+                  src={productImages[selectedImageIndex]}
+                  alt={product.name}
+                  className="main-product-image"
+                />
               </div>
             </div>
           </div>

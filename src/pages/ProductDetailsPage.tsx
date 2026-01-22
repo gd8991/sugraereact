@@ -237,23 +237,11 @@ const ProductDetailsPage = () => {
             {/* Right Side - Visual/Image */}
             <div className="promise-right">
               <div className="promise-visual">
-                {activeAccordion !== null && EXPERIENCE_ITEMS[activeAccordion] && (
-                  <div className="promise-visual-content">
-                    <div className="promise-visual-icon">{EXPERIENCE_ITEMS[activeAccordion].icon}</div>
-                    <h3 className="promise-visual-title">{EXPERIENCE_ITEMS[activeAccordion].label}</h3>
-                    <div className="promise-visual-decoration">
-                      <div className="decoration-line"></div>
-                      <div className="decoration-diamond">◆</div>
-                      <div className="decoration-line"></div>
-                    </div>
-                  </div>
-                )}
-                {activeAccordion === null && (
-                  <div className="promise-visual-placeholder">
-                    <div className="placeholder-icon">✦</div>
-                    <p className="placeholder-text">Select a promise to learn more</p>
-                  </div>
-                )}
+                <img
+                  src="/src/assets/image1.webp"
+                  alt="Sugraé Promise"
+                  className="promise-image"
+                />
               </div>
             </div>
           </div>

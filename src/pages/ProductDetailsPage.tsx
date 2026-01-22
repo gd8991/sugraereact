@@ -6,6 +6,7 @@ import { useGSAP } from '../hooks/useGSAP';
 import CartSidebar from '../components/CartSidebar';
 import GuestCheckout from '../components/GuestCheckout';
 import CustomCursor from '../components/CustomCursor';
+import { EXPERIENCE_ITEMS } from '../utils/constants';
 import type { Product } from '../types';
 
 const ProductDetailsPage = () => {
@@ -16,6 +17,7 @@ const ProductDetailsPage = () => {
   const { gsap, isReady } = useGSAP();
   const [product, setProduct] = useState<Product | null>(null);
   const [quantity, setQuantity] = useState(1);
+  const [activeAccordion, setActiveAccordion] = useState<number | null>(null);
   const pageRef = useRef<HTMLDivElement>(null);
   const imageRef = useRef<HTMLDivElement>(null);
   const contentRef = useRef<HTMLDivElement>(null);
@@ -65,6 +67,10 @@ const ProductDetailsPage = () => {
 
   const incrementQuantity = () => setQuantity(prev => prev + 1);
   const decrementQuantity = () => setQuantity(prev => Math.max(1, prev - 1));
+
+  const toggleAccordion = (index: number) => {
+    setActiveAccordion(activeAccordion === index ? null : index);
+  };
 
   if (!product) {
     return (
@@ -196,6 +202,58 @@ const ProductDetailsPage = () => {
                     <strong>Collection:</strong> Midnight Series
                   </div>
                 </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* The Sugraé Promise Section */}
+        <div className="product-promise-section">
+          <div className="promise-container">
+            {/* Left Side - Accordions */}
+            <div className="promise-left">
+              <h2 className="promise-title">The Sugraé Promise</h2>
+              <div className="promise-accordions">
+                {EXPERIENCE_ITEMS.map((item, index) => (
+                  <div
+                    key={index}
+                    className={`promise-accordion ${activeAccordion === index ? 'active' : ''}`}
+                  >
+                    <button
+                      className="accordion-header"
+                      onClick={() => toggleAccordion(index)}
+                    >
+                      <span className="accordion-label">{item.label}</span>
+                      <span className="accordion-arrow">{activeAccordion === index ? '−' : '+'}</span>
+                    </button>
+                    <div className={`accordion-content ${activeAccordion === index ? 'open' : ''}`}>
+                      <p>{item.text}</p>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            {/* Right Side - Visual/Image */}
+            <div className="promise-right">
+              <div className="promise-visual">
+                {activeAccordion !== null && EXPERIENCE_ITEMS[activeAccordion] && (
+                  <div className="promise-visual-content">
+                    <div className="promise-visual-icon">{EXPERIENCE_ITEMS[activeAccordion].icon}</div>
+                    <h3 className="promise-visual-title">{EXPERIENCE_ITEMS[activeAccordion].label}</h3>
+                    <div className="promise-visual-decoration">
+                      <div className="decoration-line"></div>
+                      <div className="decoration-diamond">◆</div>
+                      <div className="decoration-line"></div>
+                    </div>
+                  </div>
+                )}
+                {activeAccordion === null && (
+                  <div className="promise-visual-placeholder">
+                    <div className="placeholder-icon">✦</div>
+                    <p className="placeholder-text">Select a promise to learn more</p>
+                  </div>
+                )}
               </div>
             </div>
           </div>

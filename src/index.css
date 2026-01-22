@@ -60,8 +60,8 @@
 :root {
     --midnight: #FFFFFF;
     --pure-black: #FFFFFF;
-    --gold: #D4AF37;
-    --champagne-gold: #B8860B;
+    --gold: #5A0E1F;
+    --champagne-gold: #7A1229;
     --white: #1A1A1A;
     --soft-white: #2A2A2A;
     --gray: #505050;
@@ -83,14 +83,14 @@
 
 html {
     scroll-behavior: smooth;
-    background: #FFFFFF;
+    background: #f0ebe3;
 }
 
 body {
     font-family: var(--font-body);
     font-weight: 300;
     color: #1A1A1A;
-    background: #FFFFFF;
+    background: #f0ebe3;
     overflow-x: hidden;
     line-height: 1.6;
     letter-spacing: 0.02em;
@@ -157,7 +157,7 @@ a, button {
     left: 0;
     width: 100%;
     height: 100%;
-    background: #FFFFFF;
+    background: #f0ebe3;
     z-index: 9999;
     display: flex;
     align-items: center;
@@ -263,6 +263,12 @@ nav {
 
 .logo:hover {
     color: var(--champagne-gold);
+}
+
+.logo-image {
+    height: 100px;
+    width: auto;
+    display: block;
 }
 
 .nav-links {
@@ -409,6 +415,7 @@ nav {
 
 .cart-icon {
     display: block;
+    filter: brightness(0) saturate(100%) invert(9%) sepia(71%) saturate(4084%) hue-rotate(334deg) brightness(84%) contrast(101%);
 }
 
 .cart-badge {
@@ -457,7 +464,7 @@ nav {
     align-items: center;
     justify-content: center;
     overflow: hidden;
-    background: #FFFFFF;
+    background: #f0ebe3;
 }
 
 .hero::before {
@@ -536,12 +543,12 @@ nav {
     font-size: 0.85rem;
     font-weight: 300;
     letter-spacing: 0.6rem;
-    color: var(--gold);
+    color: #5A0E1F;
     text-transform: uppercase;
     margin-bottom: 2.5rem;
     opacity: 0;
     transform: translateY(30px);
-    text-shadow: 0 0 15px rgba(212, 175, 55, 0.4);
+    text-shadow: 0 0 15px rgba(90, 14, 31, 0.2);
     position: relative;
 }
 
@@ -552,7 +559,7 @@ nav {
     top: 50%;
     width: 40px;
     height: 1px;
-    background: linear-gradient(90deg, transparent, var(--gold), transparent);
+    background: linear-gradient(90deg, transparent, #5A0E1F, transparent);
 }
 
 .hero-subtitle::before {
@@ -589,6 +596,11 @@ nav {
     50% { background-position: 100% 50%; }
 }
 
+.hero-logo {
+    height: 800px;
+    width: auto;
+}
+
 /* Fallback for browsers with accent rendering issues */
 @supports not (-webkit-background-clip: text) {
     .hero-title {
@@ -604,7 +616,7 @@ nav {
     font-size: 1.4rem;
     font-weight: 300;
     font-style: italic;
-    color: var(--light-gray);
+    color: #5A0E1F;
     margin-bottom: 3.5rem;
     opacity: 0;
     transform: translateY(30px);
@@ -612,7 +624,7 @@ nav {
     max-width: 600px;
     margin-left: auto;
     margin-right: auto;
-    text-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+    text-shadow: 0 2px 10px rgba(90, 14, 31, 0.1);
 }
 
 .hero-cta-group {
@@ -731,7 +743,7 @@ nav {
 /* Founder Section - Cinematic */
 .founder-section {
     padding: 8rem 4rem;
-    background: linear-gradient(135deg, #F5F5F5 0%, #FAFAFA 50%, #FFFFFF 100%);
+    background: #f0ebe3;
     position: relative;
     overflow: hidden;
 }
@@ -758,7 +770,7 @@ nav {
 
 .founder-video {
     position: relative;
-    background: #F5F5F5;
+    background: #f0ebe3;
     aspect-ratio: 16/9;
     overflow: hidden;
     opacity: 0;
@@ -841,7 +853,7 @@ nav {
 /* Collection - Midnight Gallery */
 .collection-section {
     padding: 8rem 0;
-    background: linear-gradient(180deg, #FFFFFF 0%, #F9F9F9 30%, #FFFFFF 100%);
+    background: #f0ebe3;
     position: relative;
     overflow: hidden;
 }
@@ -901,7 +913,7 @@ nav {
 
 .product-card {
     position: relative;
-    background: #F5F5F5;
+    background: #f0ebe3;
     overflow: hidden;
     transition: var(--transition);
     opacity: 1;
@@ -934,7 +946,7 @@ nav {
 .product-image {
     position: relative;
     height: 400px;
-    background: linear-gradient(180deg, #FAFAFA 0%, #F5F5F5 100%);
+    background: #f0ebe3;
     overflow: hidden;
 }
 
@@ -1099,7 +1111,7 @@ nav {
     position: relative;
     width: 300px;
     height: 400px;
-    background: linear-gradient(180deg, #FAFAFA 0%, #F5F5F5 100%);
+    background: #f0ebe3;
     border-radius: 8px;
     display: flex;
     align-items: center;
@@ -1265,7 +1277,7 @@ nav {
     width: 90%;
     max-width: 1200px;
     max-height: 90vh;
-    background: #FFFFFF;
+    background: #f0ebe3;
     border: 1px solid rgba(212, 175, 55, 0.2);
     border-radius: 8px;
     z-index: 10000;
@@ -1337,7 +1349,7 @@ nav {
 /* Experience Section */
 .experience-section {
     padding: 8rem 4rem;
-    background: linear-gradient(135deg, #FFFFFF 0%, #F9F9F9 40%, #FAFAFA 70%, #F5F5F5 100%);
+    background: #f0ebe3;
     position: relative;
     overflow: hidden;
 }
@@ -1431,7 +1443,7 @@ nav {
     aspect-ratio: 4/3;
     border-radius: 12px;
     overflow: hidden;
-    background: linear-gradient(135deg, #F5F5F5 0%, rgba(212, 175, 55, 0.05) 100%);
+    background: #f0ebe3;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -1564,7 +1576,7 @@ nav {
     aspect-ratio: 5/4;
     border-radius: 12px;
     overflow: hidden;
-    background: linear-gradient(135deg, #F5F5F5 0%, rgba(212, 175, 55, 0.05) 100%);
+    background: #f0ebe3;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -1646,7 +1658,7 @@ html, body {
 /* Footer - Minimal Luxe */
 footer {
     padding: 4rem;
-    background: #F5F5F5;
+    background: #f0ebe3;
     border-top: 1px solid rgba(212, 175, 55, 0.2);
 }
 
@@ -1891,7 +1903,7 @@ footer {
     right: 0;
     width: 450px;
     height: 100vh;
-    background: #FFFFFF;
+    background: #f0ebe3;
     z-index: 9999;
     transform: translateX(100%);
     box-shadow: -10px 0 30px rgba(0, 0, 0, 0.2);
@@ -2168,7 +2180,7 @@ footer {
     width: 90%;
     max-width: 800px;
     max-height: 90vh;
-    background: #FFFFFF;
+    background: #f0ebe3;
     border: 1px solid rgba(212, 175, 55, 0.2);
     overflow-y: auto;
     opacity: 0;
@@ -2407,7 +2419,7 @@ footer {
 /* Product Details Page */
 .product-details-page {
     min-height: 100vh;
-    background: #FFFFFF;
+    background: #f0ebe3;
     padding-top: 100px;
 }
 
@@ -2479,7 +2491,7 @@ footer {
     width: 100%;
     max-width: 500px;
     aspect-ratio: 1;
-    background: linear-gradient(135deg, #FAFAFA 0%, #F5F5F5 100%);
+    background: #f0ebe3;
     border-radius: 12px;
     display: flex;
     align-items: center;

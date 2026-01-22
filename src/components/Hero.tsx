@@ -87,7 +87,7 @@ const Hero: FC = () => {
         <div
           className="video-element"
           style={{
-            background: '#FFFFFF',
+            background: '#f0ebe3',
             height: '100%'
           }}
         />
@@ -99,10 +99,6 @@ const Hero: FC = () => {
 
       {/* Hero Content */}
       <div className="hero-content">
-        <div ref={subtitleRef} className="hero-subtitle">
-          Born from a Mother's Love • 2025
-        </div>
-
         <h1 ref={titleRef} className="hero-title">
           <img src={logo} alt="Sugraé" className="hero-logo" />
         </h1>
@@ -121,11 +117,6 @@ const Hero: FC = () => {
         </div>
       </div>
 
-      {/* Scroll Indicator */}
-      <div ref={scrollIndicatorRef} className="scroll-indicator">
-        <div className="scroll-text">Scroll</div>
-        <div className="scroll-line"></div>
-      </div>
     </section>
   );
 };

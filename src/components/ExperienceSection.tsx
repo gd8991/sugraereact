@@ -15,6 +15,9 @@ const ExperienceSection: FC = () => {
     const cards = cardRefs.current.filter(Boolean);
     if (!cards.length) return;
 
+    // Check if mobile device
+    const isMobile = window.innerWidth <= 768;
+
     // Title animation
     gsap.from(titleRef.current, {
       scrollTrigger: {
@@ -27,20 +30,64 @@ const ExperienceSection: FC = () => {
       ease: 'power3.out'
     });
 
-    // Animate each card on scroll
-    cards.forEach((card, index) => {
-      gsap.from(card, {
-        scrollTrigger: {
-          trigger: card,
-          start: 'top 85%',
-          toggleActions: 'play none none none'
-        },
-        duration: 1,
-        y: 60,
-        opacity: 0,
-        ease: 'power3.out',
-        delay: index * 0.1
+    // On mobile, use simple scroll animations
+    if (isMobile) {
+      cards.forEach((card) => {
+        gsap.from(card, {
+          scrollTrigger: {
+            trigger: card,
+            start: 'top 85%',
+            toggleActions: 'play none none none'
+          },
+          duration: 1,
+          y: 60,
+          opacity: 0,
+          ease: 'power3.out'
+        });
       });
+      return;
+    }
+
+    // Desktop: Pin the section and transition between cards
+    // Set initial states - hide all cards except first
+    gsap.set(cards, { opacity: 0, scale: 0.9 });
+    if (cards[0]) {
+      gsap.set(cards[0], { opacity: 1, scale: 1 });
+    }
+
+    // Create pinned scroll timeline
+    const tl = gsap.timeline({
+      scrollTrigger: {
+        trigger: sectionRef.current,
+        start: 'top top',
+        end: `+=${cards.length * 100}%`,
+        scrub: 1,
+        pin: true,
+        anticipatePin: 1
+      }
+    });
+
+    // Animate through each card
+    cards.forEach((card, index) => {
+      if (index === 0) return; // First card is already visible
+
+      const prevIndex = index - 1;
+      const timePosition = index * 1.5;
+
+      // Fade out previous card
+      tl.to(cards[prevIndex], {
+        opacity: 0,
+        scale: 0.9,
+        duration: 0.5,
+        ease: 'power2.inOut'
+      }, timePosition)
+      // Fade in current card
+      .to(card, {
+        opacity: 1,
+        scale: 1,
+        duration: 0.5,
+        ease: 'power2.inOut'
+      }, timePosition + 0.3);
     });
 
   }, [isReady, gsap]);

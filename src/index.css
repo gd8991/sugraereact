@@ -1348,7 +1348,7 @@ nav {
 
 /* Experience Section */
 .experience-section {
-    padding: 8rem 4rem;
+    padding: 6rem 0;
     background: #f0ebe3;
     position: relative;
     overflow: hidden;
@@ -1366,16 +1366,114 @@ nav {
 }
 
 .experience-container {
-    max-width: 1200px;
-    margin: 0 auto;
+    position: relative;
+    z-index: 2;
+}
+
+.experience-header {
     text-align: center;
+    margin-bottom: 4rem;
+    padding: 0 2rem;
 }
 
 .experience-title {
     font-family: var(--font-display);
     font-size: 4rem;
     color: var(--white);
-    margin-bottom: 3rem;
+    margin-bottom: 0;
+    letter-spacing: 0.1em;
+}
+
+/* Experience Cards - New Design */
+.experience-cards {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+}
+
+.experience-card {
+    position: relative;
+    width: 100%;
+    min-height: 600px;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    display: flex;
+    align-items: center;
+    overflow: hidden;
+}
+
+.experience-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 1;
+    transition: var(--transition);
+}
+
+/* Left-aligned text - gradient fades from left to right */
+.experience-card.text-left .experience-overlay {
+    background: linear-gradient(to right,
+        rgba(240, 235, 227, 0.98) 0%,
+        rgba(240, 235, 227, 0.95) 25%,
+        rgba(240, 235, 227, 0.85) 40%,
+        rgba(240, 235, 227, 0.5) 55%,
+        rgba(240, 235, 227, 0.2) 70%,
+        transparent 100%);
+}
+
+/* Right-aligned text - gradient fades from right to left */
+.experience-card.text-right .experience-overlay {
+    background: linear-gradient(to left,
+        rgba(240, 235, 227, 0.98) 0%,
+        rgba(240, 235, 227, 0.95) 25%,
+        rgba(240, 235, 227, 0.85) 40%,
+        rgba(240, 235, 227, 0.5) 55%,
+        rgba(240, 235, 227, 0.2) 70%,
+        transparent 100%);
+}
+
+.experience-card-content {
+    position: relative;
+    z-index: 2;
+    max-width: 1400px;
+    width: 100%;
+    margin: 0 auto;
+    padding: 6rem 4rem;
+}
+
+.experience-card.text-left .experience-card-content {
+    padding-right: 50%;
+}
+
+.experience-card.text-right .experience-card-content {
+    padding-left: 50%;
+    text-align: right;
+}
+
+.experience-card .experience-label {
+    font-family: var(--font-display);
+    font-size: 3rem;
+    color: var(--gold);
+    letter-spacing: 0.12em;
+    margin-bottom: 2rem;
+    font-weight: 400;
+}
+
+.experience-card .experience-text {
+    font-family: var(--font-serif);
+    font-size: 1.15rem;
+    line-height: 1.9;
+    color: #1A1A1A;
+    margin: 0;
+    max-width: 650px;
+    font-style: normal;
+}
+
+.experience-card.text-right .experience-text {
+    margin-left: auto;
 }
 
 .experience-grid {
@@ -3061,54 +3159,51 @@ footer {
     .product-actions { flex-direction: column; }
     .experience-grid { grid-template-columns: 1fr 1fr; }
 
-    .experience-detailed-grid { gap: 4rem; }
-    .experience-item-detailed {
-        grid-template-columns: 1fr !important;
-        gap: 2rem;
-        text-align: center;
-    }
-    .experience-item-detailed.image-right,
-    .experience-item-detailed.image-left {
-        grid-template-areas: "image" "content" !important;
-    }
-    .experience-content { text-align: center; }
-    .experience-content .experience-label { font-size: 2rem; }
-
-    /* Disable pinned layout on mobile to prevent auto-scroll issues */
-    .experience-section.experience-pinned {
-        height: auto;
-        overflow: visible;
+    .experience-section {
+        padding: 4rem 0;
     }
 
-    .experience-section.experience-pinned .experience-container {
-        height: auto;
-        padding-top: 4rem;
+    .experience-title {
+        font-size: 2.5rem;
     }
 
-    .experience-pinned-content {
-        position: relative;
-        display: flex;
-        flex-direction: column;
-        gap: 4rem;
-        padding: 2rem;
+    .experience-card {
+        min-height: 450px;
     }
 
-    .experience-item-pinned {
-        position: relative !important;
-        transform: none !important;
-        opacity: 1 !important;
-        grid-template-columns: 1fr !important;
-        gap: 2rem;
-        padding: 0;
-        width: 100%;
-        left: auto;
+    .experience-card-content {
+        padding: 4rem 2rem !important;
     }
-    .experience-item-pinned.image-right,
-    .experience-item-pinned.image-left {
-        grid-template-areas: "image" "content" !important;
+
+    .experience-card.text-left .experience-card-content,
+    .experience-card.text-right .experience-card-content {
+        padding-right: 2rem !important;
+        padding-left: 2rem !important;
+        text-align: left;
     }
-    .experience-item-pinned .experience-content { text-align: center; }
-    .experience-item-pinned .experience-label { font-size: 2rem; }
+
+    /* Stronger gradient overlay on mobile for better readability */
+    .experience-card.text-left .experience-overlay,
+    .experience-card.text-right .experience-overlay {
+        background: linear-gradient(to bottom,
+            rgba(240, 235, 227, 0.95) 0%,
+            rgba(240, 235, 227, 0.9) 50%,
+            rgba(240, 235, 227, 0.75) 100%);
+    }
+
+    .experience-card .experience-label {
+        font-size: 2rem;
+    }
+
+    .experience-card .experience-text {
+        font-size: 1rem;
+        line-height: 1.7;
+        max-width: 100%;
+    }
+
+    .experience-card.text-right .experience-text {
+        margin-left: 0;
+    }
     .footer-content { flex-direction: column; gap: 2rem; }
     .cursor, .cursor-dot { display: none; }
 

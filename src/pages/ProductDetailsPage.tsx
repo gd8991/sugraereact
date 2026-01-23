@@ -104,6 +104,19 @@ const ProductDetailsPage = () => {
 
         {/* Main Content */}
         <div className="product-details-container">
+          {/* Breadcrumb */}
+          <div className="product-breadcrumb">
+            <button onClick={() => navigate('/')} className="breadcrumb-link">
+              Home
+            </button>
+            <span className="breadcrumb-separator">/</span>
+            <button onClick={() => navigate('/#collection')} className="breadcrumb-link">
+              Collection
+            </button>
+            <span className="breadcrumb-separator">/</span>
+            <span className="breadcrumb-current">{product.name}</span>
+          </div>
+
           {/* Left Side - Product Image Gallery */}
           <div className="product-details-left" ref={imageRef}>
             <div className="product-gallery">

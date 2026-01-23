@@ -19,6 +19,7 @@ const ProductDetailsPage = () => {
   const [quantity, setQuantity] = useState(1);
   const [activeAccordion, setActiveAccordion] = useState<number | null>(null);
   const [selectedImageIndex, setSelectedImageIndex] = useState(0);
+  const [selectedColor, setSelectedColor] = useState('maroon');
   const pageRef = useRef<HTMLDivElement>(null);
   const imageRef = useRef<HTMLDivElement>(null);
   const contentRef = useRef<HTMLDivElement>(null);
@@ -168,6 +169,25 @@ const ProductDetailsPage = () => {
                 <div className="product-details-price">
                   <span className="price-label">Price</span>
                   <span className="price-value">${product.price}</span>
+                </div>
+
+                {/* Color Selector */}
+                <div className="product-color-section">
+                  <span className="color-label">Packaging Color</span>
+                  <div className="color-options">
+                    <button
+                      className={`color-option ${selectedColor === 'maroon' ? 'active' : ''}`}
+                      onClick={() => setSelectedColor('maroon')}
+                      aria-label="Select Maroon"
+                      style={{ backgroundColor: '#800020' }}
+                    />
+                    <button
+                      className={`color-option ${selectedColor === 'gray' ? 'active' : ''}`}
+                      onClick={() => setSelectedColor('gray')}
+                      aria-label="Select Gray"
+                      style={{ backgroundColor: '#808080' }}
+                    />
+                  </div>
                 </div>
 
                 {/* Quantity Selector */}

@@ -135,8 +135,6 @@ const ProductDetailsPage = () => {
 
               {/* Main Image */}
               <div className="gallery-main-image">
-                <div className="product-details-number">{product.number}</div>
-                <div className="product-details-bottle">{product.bottleText}</div>
                 <img
                   src={productImages[selectedImageIndex]}
                   alt={product.name}

@@ -11,6 +11,8 @@ export const NAVIGATION_LINKS: NavLink[] = [
   { href: '#experience', text: 'Experience' },
 ];
 
+// Fallback products - only used if Shopify fetch fails
+// Prices are intentionally set to 0 to make it obvious if Shopify data isn't loading
 export const PRODUCTS: Product[] = [
   {
     id: 'alpha',
@@ -19,8 +21,7 @@ export const PRODUCTS: Product[] = [
     notes: 'Bergamot • White Tea • Soft Musk',
     description: 'Inspired by morning\'s first light touching a newborn\'s cheek. A gentle awakening that celebrates new beginnings with the softest touch.',
     bottleText: 'Sugraé',
-    price: 125,
-    shopifyVariantId: '51885552927020'
+    price: 0, // Will be fetched from Shopify
   },
   {
     id: 'first-love',
@@ -29,8 +30,7 @@ export const PRODUCTS: Product[] = [
     notes: 'Honey • Vanilla • Sandalwood',
     description: 'The warmth of an embrace, the strength of love. Created for the woman who carries life while maintaining her golden radiance.',
     bottleText: 'Sugraé',
-    price: 135,
-    shopifyVariantId: '51885552927020'
+    price: 0, // Will be fetched from Shopify
   },
   {
     id: 'aura',
@@ -39,8 +39,7 @@ export const PRODUCTS: Product[] = [
     notes: 'Rose Petals • Peach • White Cedar',
     description: 'Proof that gentleness is the ultimate luxury. A sophisticated whisper that speaks volumes without overwhelming.',
     bottleText: 'Sugraé',
-    price: 145,
-    shopifyVariantId: '51885552927020'
+    price: 0, // Will be fetched from Shopify
   }
 ];
 

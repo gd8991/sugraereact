@@ -1,8 +1,9 @@
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { createPortal } from 'react-dom';
 import type { FC } from 'react';
 import { useGSAP } from '../hooks/useGSAP';
 import { useCart } from '../contexts/CartContext';
+import Price from './Price';
 import type { Product } from '../types';
 
 interface ProductModalProps {
@@ -16,6 +17,7 @@ const ProductModal: FC<ProductModalProps> = ({ product, isOpen, onClose }) => {
   const { addItem, openCart } = useCart();
   const modalRef = useRef<HTMLDivElement>(null);
   const overlayRef = useRef<HTMLDivElement>(null);
+  const [selectedColor, setSelectedColor] = useState('maroon');
 
   // Debug logging
   console.log('ProductModal render:', { product: product?.name, isOpen, isReady });
@@ -90,6 +92,7 @@ const ProductModal: FC<ProductModalProps> = ({ product, isOpen, onClose }) => {
   };
 
   const openProductPage = () => {
+    if (!product) return;
     const basePath = import.meta.env.VITE_BASE_PATH || '/';
     const productUrl = `${basePath}${basePath.endsWith('/') ? '' : '/'}product/${product.id}`;
     window.open(productUrl, '_blank');
@@ -140,7 +143,26 @@ const ProductModal: FC<ProductModalProps> = ({ product, isOpen, onClose }) => {
               <div className="modal-product-footer">
                 <div className="modal-product-price">
                   <span className="price-label">Price</span>
-                  <span className="price-value">${product.price}</span>
+                  <span className="price-value"><Price product={product} /></span>
+                </div>
+
+                {/* Color Selector */}
+                <div className="modal-color-section">
+                  <span className="modal-color-label">Color</span>
+                  <div className="modal-color-options">
+                    <button
+                      className={`modal-color-option ${selectedColor === 'maroon' ? 'active' : ''}`}
+                      onClick={() => setSelectedColor('maroon')}
+                      aria-label="Select Maroon"
+                      style={{ backgroundColor: '#800020' }}
+                    />
+                    <button
+                      className={`modal-color-option ${selectedColor === 'gray' ? 'active' : ''}`}
+                      onClick={() => setSelectedColor('gray')}
+                      aria-label="Select Gray"
+                      style={{ backgroundColor: '#808080' }}
+                    />
+                  </div>
                 </div>
 
                 <div className="modal-product-actions">

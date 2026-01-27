@@ -1,6 +1,7 @@
 import type { FC } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useCart } from '../contexts/CartContext';
+import Price from './Price';
 import type { Product } from '../types';
 
 interface ProductCardProps {
@@ -46,7 +47,7 @@ const ProductCard: FC<ProductCardProps> = ({ product }) => {
             <div className="product-description-container">
               <p className="product-description">{truncateText(product.description, 80)}</p>
             </div>
-            <div className="product-price">${product.price}</div>
+            <div className="product-price"><Price product={product} /></div>
             <div className="product-actions">
               <button
                 onClick={openProductPage}

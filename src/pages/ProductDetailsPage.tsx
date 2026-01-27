@@ -6,6 +6,7 @@ import { useGSAP } from '../hooks/useGSAP';
 import CartSidebar from '../components/CartSidebar';
 import GuestCheckout from '../components/GuestCheckout';
 import CustomCursor from '../components/CustomCursor';
+import Price from '../components/Price';
 import { EXPERIENCE_ITEMS } from '../utils/constants';
 import type { Product } from '../types';
 
@@ -168,7 +169,7 @@ const ProductDetailsPage = () => {
               <div className="product-details-footer">
                 <div className="product-details-price">
                   <span className="price-label">Price</span>
-                  <span className="price-value">${product.price}</span>
+                  <span className="price-value"><Price product={product} /></span>
                 </div>
 
                 {/* Color Selector */}

@@ -1,10 +1,8 @@
 import { useState, useRef, useEffect, type FC } from 'react';
-import { useRegion, type Region } from '../contexts/RegionContext';
-
-const REGIONS: Region[] = ['India', 'UAE', 'Global'];
+import { useRegion, MARKETS, type Region } from '../contexts/RegionContext';
 
 const RegionSelector: FC = () => {
-  const { region, setRegion } = useRegion();
+  const { region, marketConfig, setRegion } = useRegion();
   const [isOpen, setIsOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
 
@@ -15,9 +13,14 @@ const RegionSelector: FC = () => {
       }
     };
 
-    document.addEventListener('mousedown', handleClickOutside);
-    return () => document.removeEventListener('mousedown', handleClickOutside);
-  }, []);
+    if (isOpen) {
+      document.addEventListener('mousedown', handleClickOutside);
+    }
+
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, [isOpen]);
 
   const handleRegionChange = (newRegion: Region) => {
     setRegion(newRegion);
@@ -31,42 +34,27 @@ const RegionSelector: FC = () => {
         onClick={() => setIsOpen(!isOpen)}
         aria-label="Select region"
       >
-        <svg
-          width="16"
-          height="16"
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="currentColor"
-          strokeWidth="2"
-        >
-          <circle cx="12" cy="12" r="10" />
-          <path d="M2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z" />
-        </svg>
-        <span className="region-selector-text">{region}</span>
-        <svg
-          className={`region-selector-arrow ${isOpen ? 'open' : ''}`}
-          width="12"
-          height="12"
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="currentColor"
-          strokeWidth="2"
-        >
-          <polyline points="6 9 12 15 18 9" />
-        </svg>
+        <span className="region-flag">{marketConfig.flag}</span>
+        <span className="region-selector-text">{marketConfig.name}</span>
+        <span className={`region-selector-arrow ${isOpen ? 'open' : ''}`}>▼</span>
       </button>
 
       {isOpen && (
         <div className="region-selector-dropdown">
-          {REGIONS.map((r) => (
-            <button
-              key={r}
-              className={`region-option ${r === region ? 'active' : ''}`}
-              onClick={() => handleRegionChange(r)}
-            >
-              {r}
-            </button>
-          ))}
+          {(Object.keys(MARKETS) as Region[]).map((regionKey) => {
+            const market = MARKETS[regionKey];
+            return (
+              <button
+                key={regionKey}
+                className={`region-option ${region === regionKey ? 'active' : ''}`}
+                onClick={() => handleRegionChange(regionKey)}
+              >
+                <span className="region-flag">{market.flag}</span>
+                <span className="region-name">{market.name}</span>
+                <span className="region-currency">({market.currency})</span>
+              </button>
+            );
+          })}
         </div>
       )}
     </div>

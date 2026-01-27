@@ -2,6 +2,7 @@ import { useEffect, useRef } from 'react';
 import type { FC } from 'react';
 import { useCart } from '../contexts/CartContext';
 import { useGSAP } from '../hooks/useGSAP';
+import Price from './Price';
 import cartIcon from '../assets/cart.png';
 
 const CartSidebar: FC = () => {
@@ -118,7 +119,7 @@ const CartSidebar: FC = () => {
                         </div>
                       </div>
 
-                      <div className="cart-item-price">${item.product.price}</div>
+                      <div className="cart-item-price"><Price product={item.product} /></div>
                     </div>
                     <div className="cart-item-controls">
                       <div className="quantity-controls">

@@ -1,6 +1,8 @@
 import { createContext, useContext, useReducer, type ReactNode } from 'react';
 import type { CartItem, Product } from '../types';
 import { redirectToShopifyCheckout } from '../utils/shopify';
+import { useRegion } from './RegionContext';
+import { getProductPrice } from '../utils/pricing';
 
 interface CartState {
   items: CartItem[];
@@ -134,6 +136,7 @@ const initialState: CartState = {
 
 export const CartProvider = ({ children }: { children: ReactNode }) => {
   const [state, dispatch] = useReducer(cartReducer, initialState);
+  const { region } = useRegion();
 
   const addItem = (product: Product, color: string = 'maroon') => {
     dispatch({ type: 'ADD_ITEM', payload: { product, color } });
@@ -173,7 +176,7 @@ export const CartProvider = ({ children }: { children: ReactNode }) => {
       return;
     }
 
-    redirectToShopifyCheckout(state.items);
+    redirectToShopifyCheckout(state.items, region);
     dispatch({ type: 'CLOSE_CART' });
   };
 
@@ -182,7 +185,10 @@ export const CartProvider = ({ children }: { children: ReactNode }) => {
   };
 
   const getCartTotal = () => {
-    return state.items.reduce((total, item) => total + (item.product.price * item.quantity), 0);
+    return state.items.reduce((total, item) => {
+      const price = getProductPrice(item.product, region);
+      return total + (price * item.quantity);
+    }, 0);
   };
 
   const getCartItemCount = () => {

@@ -1,18 +1,20 @@
 import type { CartItem } from '../types';
+import type { Region } from '../contexts/RegionContext';
+import { getProductVariantId } from './pricing';
 
 export interface ShopifyLineItem {
   variant_id: string;
   quantity: number;
 }
 
-export const createShopifyCheckoutUrl = (items: CartItem[], domain: string = 'sugrae.myshopify.com'): string => {
+export const createShopifyCheckoutUrl = (items: CartItem[], region: Region, domain: string = 'sugrae.myshopify.com'): string => {
   if (items.length === 0) {
     throw new Error('Cannot create checkout URL with empty cart');
   }
 
   // Build cart permalink with variant IDs and quantities
   const cartItems = items.map(item => {
-    const variantId = item.product.shopifyVariantId || '10080692535596';
+    const variantId = getProductVariantId(item.product, region) || '10080692535596';
     return `${variantId}:${item.quantity}`;
   }).join(',');
 
@@ -23,13 +25,13 @@ export const createShopifyCheckoutUrl = (items: CartItem[], domain: string = 'su
   return checkoutUrl;
 };
 
-export const addToCartAndRedirect = async (items: CartItem[], domain: string = 'sugrae.myshopify.com'): Promise<void> => {
+export const addToCartAndRedirect = async (items: CartItem[], region: Region, domain: string = 'sugrae.myshopify.com'): Promise<void> => {
   try {
     // Create form data for adding multiple items to cart
     const formData = new FormData();
 
     items.forEach(item => {
-      const variantId = item.product.shopifyVariantId || '51885552927020';
+      const variantId = getProductVariantId(item.product, region) || '51885552927020';
       formData.append('items[][id]', variantId);
       formData.append('items[][quantity]', item.quantity.toString());
     });
@@ -49,12 +51,12 @@ export const addToCartAndRedirect = async (items: CartItem[], domain: string = '
   } catch (error) {
     console.error('Error adding items to cart:', error);
     // Fallback to direct cart URL method
-    const cartUrl = createShopifyCheckoutUrl(items, domain);
+    const cartUrl = createShopifyCheckoutUrl(items, region, domain);
     window.open(cartUrl, '_blank', 'noopener,noreferrer');
   }
 };
 
-export const redirectToShopifyCheckout = (items: CartItem[], domain?: string): void => {
+export const redirectToShopifyCheckout = (items: CartItem[], region: Region, domain?: string): void => {
   try {
     const storeDomain = domain || 'sugrae.myshopify.com';
 
@@ -62,7 +64,7 @@ export const redirectToShopifyCheckout = (items: CartItem[], domain?: string): v
 
     // Use the buy_button channel template format
     const cartItems = items.map(item => {
-      const variantId = item.product.shopifyVariantId || '51885552927020';
+      const variantId = getProductVariantId(item.product, region) || '51885552927020';
       return `${variantId}:${item.quantity}`;
     }).join(',');
 

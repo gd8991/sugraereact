@@ -60,12 +60,14 @@ export class ShopifyStorefrontAPI {
     console.log('Query:', query);
     console.log('Variables:', variables);
 
+    const headers: Record<string, string> = {
+      'Content-Type': 'application/json',
+      'X-Shopify-Storefront-Access-Token': this.accessToken,
+    };
+
     const response = await fetch(`https://${this.domain}/api/${this.apiVersion}/graphql.json`, {
       method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'X-Shopify-Storefront-Access-Token': this.accessToken,
-      },
+      headers,
       body: JSON.stringify({ query, variables }),
     });
 
@@ -83,9 +85,9 @@ export class ShopifyStorefrontAPI {
     return result;
   }
 
-  async fetchProducts(first: number = 10): Promise<ShopifyProduct[]> {
+  async fetchProducts(first: number = 10, countryCode?: string): Promise<ShopifyProduct[]> {
     const query = `
-      query getProducts($first: Int!) {
+      query getProducts($first: Int!, $country: CountryCode) @inContext(country: $country) {
         products(first: $first) {
           edges {
             node {
@@ -125,8 +127,9 @@ export class ShopifyStorefrontAPI {
     `;
 
     try {
-      console.log('Fetching products from Shopify with first:', first);
-      const response: ShopifyResponse = await this.query(query, { first });
+      console.log('Fetching products from Shopify with first:', first, 'country:', countryCode);
+      const variables = { first, country: countryCode };
+      const response: ShopifyResponse = await this.query(query, variables);
 
       console.log('Raw Shopify response:', response);
 

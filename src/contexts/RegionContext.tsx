@@ -1,9 +1,38 @@
 import { createContext, useContext, useState, useEffect, type ReactNode } from 'react';
 
-export type Region = 'India' | 'UAE' | 'Global';
+export type Region = 'India' | 'UAE';
+
+export interface MarketConfig {
+  region: Region;
+  name: string;
+  currency: string;
+  currencySymbol: string;
+  flag: string;
+  countryCode: string;
+}
+
+export const MARKETS: Record<Region, MarketConfig> = {
+  India: {
+    region: 'India',
+    name: 'India',
+    currency: 'INR',
+    currencySymbol: '₹',
+    flag: '🇮🇳',
+    countryCode: 'IN'
+  },
+  UAE: {
+    region: 'UAE',
+    name: 'UAE',
+    currency: 'AED',
+    currencySymbol: 'AED',
+    flag: '🇦🇪',
+    countryCode: 'AE'
+  }
+};
 
 interface RegionContextType {
   region: Region;
+  marketConfig: MarketConfig;
   setRegion: (region: Region) => void;
 }
 
@@ -23,23 +52,23 @@ const detectUserCountry = async (): Promise<Region> => {
     const data = await response.json();
     const countryCode = data.country_code;
 
-    // Return mapped region or default to Global
-    return countryToRegion[countryCode] || 'Global';
+    // Return mapped region or default to India
+    return countryToRegion[countryCode] || 'India';
   } catch (error) {
     console.error('Failed to detect location:', error);
-    return 'Global'; // Default fallback
+    return 'India'; // Default fallback
   }
 };
 
 export const RegionProvider = ({ children }: { children: ReactNode }) => {
-  const [region, setRegion] = useState<Region>('Global');
+  const [region, setRegion] = useState<Region>('India');
 
   useEffect(() => {
     const initializeRegion = async () => {
       // Check if user has previously selected a region
       const savedRegion = localStorage.getItem('selectedRegion') as Region | null;
 
-      if (savedRegion) {
+      if (savedRegion && (savedRegion === 'India' || savedRegion === 'UAE')) {
         setRegion(savedRegion);
       } else {
         // Auto-detect region based on location
@@ -57,8 +86,10 @@ export const RegionProvider = ({ children }: { children: ReactNode }) => {
     localStorage.setItem('selectedRegion', newRegion);
   };
 
+  const marketConfig = MARKETS[region];
+
   return (
-    <RegionContext.Provider value={{ region, setRegion: handleSetRegion }}>
+    <RegionContext.Provider value={{ region, marketConfig, setRegion: handleSetRegion }}>
       {children}
     </RegionContext.Provider>
   );

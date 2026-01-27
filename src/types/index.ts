@@ -6,7 +6,11 @@ export interface Product {
   description: string;
   bottleText: string;
   price: number;
+  priceINR?: number;
+  priceAED?: number;
   shopifyVariantId?: string;
+  shopifyVariantIdINR?: string;
+  shopifyVariantIdAED?: string;
 }
 
 export interface CartItem {

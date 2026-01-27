@@ -77,7 +77,7 @@ const ProductModal: FC<ProductModalProps> = ({ product, isOpen, onClose }) => {
 
   const handleAddToCart = () => {
     if (product) {
-      addItem(product);
+      addItem(product, selectedColor);
       onClose();
       openCart();
     }

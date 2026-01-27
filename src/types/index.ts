@@ -12,6 +12,7 @@ export interface Product {
 export interface CartItem {
   product: Product;
   quantity: number;
+  color: string;
 }
 
 export interface CustomerInfo {

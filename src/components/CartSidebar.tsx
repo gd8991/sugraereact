@@ -9,6 +9,7 @@ const CartSidebar: FC = () => {
     state,
     removeItem,
     updateQuantity,
+    updateColor,
     closeCart,
     openCheckout,
     getCartTotal,
@@ -89,14 +90,34 @@ const CartSidebar: FC = () => {
           ) : (
             <>
               <div className="cart-items">
-                {state.items.map((item) => (
-                  <div key={item.product.id} className="cart-item">
+                {state.items.map((item, index) => (
+                  <div key={`${item.product.id}-${index}`} className="cart-item">
                     <div className="cart-item-image">
                       <div className="cart-item-bottle">{item.product.bottleText}</div>
                     </div>
                     <div className="cart-item-details">
                       <h3 className="cart-item-name">{item.product.name}</h3>
                       <p className="cart-item-notes">{item.product.notes}</p>
+
+                      {/* Color Selector */}
+                      <div className="cart-item-color">
+                        <span className="cart-color-label">Color:</span>
+                        <div className="cart-color-options">
+                          <button
+                            className={`cart-color-option ${item.color === 'maroon' ? 'active' : ''}`}
+                            onClick={() => updateColor(item.product.id, 'maroon')}
+                            aria-label="Select Maroon"
+                            style={{ backgroundColor: '#800020' }}
+                          />
+                          <button
+                            className={`cart-color-option ${item.color === 'gray' ? 'active' : ''}`}
+                            onClick={() => updateColor(item.product.id, 'gray')}
+                            aria-label="Select Gray"
+                            style={{ backgroundColor: '#808080' }}
+                          />
+                        </div>
+                      </div>
+
                       <div className="cart-item-price">${item.product.price}</div>
                     </div>
                     <div className="cart-item-controls">

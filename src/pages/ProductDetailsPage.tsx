@@ -245,6 +245,31 @@ const ProductDetailsPage = () => {
           </div>
         </div>
 
+        {/* Notes Section - Full Width Below Product Details */}
+        <div className="product-notes-section">
+          <h2 className="notes-title">Notes</h2>
+          <div className="notes-content">
+            <div className="note-item">
+              <h3 className="note-name">Bergamot</h3>
+              <p className="note-description">
+                A bright citrus essence that sparkles with Mediterranean sunshine. Its fresh, uplifting character brings an immediate sense of joy and clarity, like the first rays of morning light dancing on dewdrops.
+              </p>
+            </div>
+            <div className="note-item">
+              <h3 className="note-name">Lavender</h3>
+              <p className="note-description">
+                The heart of tranquility, lavender unfolds with soothing herbal warmth. Its calming presence evokes fields of purple blooms swaying in a gentle breeze, bringing peace and timeless elegance to the composition.
+              </p>
+            </div>
+            <div className="note-item">
+              <h3 className="note-name">Vanilla</h3>
+              <p className="note-description">
+                Rich, creamy, and enveloping. Vanilla provides a soft, comforting embrace that lingers on the skin. Its sweet warmth adds depth and sensuality, creating a lasting impression of pure indulgence.
+              </p>
+            </div>
+          </div>
+        </div>
+
         {/* The Sugraé Promise Section */}
         <div className="product-promise-section">
           <div className="promise-container">

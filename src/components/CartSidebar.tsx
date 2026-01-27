@@ -2,6 +2,8 @@ import { useEffect, useRef } from 'react';
 import type { FC } from 'react';
 import { useCart } from '../contexts/CartContext';
 import { useGSAP } from '../hooks/useGSAP';
+import { useRegion } from '../contexts/RegionContext';
+import { formatPrice } from '../utils/pricing';
 import Price from './Price';
 import cartIcon from '../assets/cart.png';
 
@@ -17,6 +19,7 @@ const CartSidebar: FC = () => {
     getCartItemCount
   } = useCart();
 
+  const { marketConfig } = useRegion();
   const { gsap, isReady } = useGSAP();
   const sidebarRef = useRef<HTMLDivElement>(null);
   const overlayRef = useRef<HTMLDivElement>(null);
@@ -152,11 +155,11 @@ const CartSidebar: FC = () => {
                 <div className="cart-summary">
                   <div className="cart-summary-row">
                     <span>Items ({getCartItemCount()})</span>
-                    <span>${getCartTotal()}</span>
+                    <span>{formatPrice(getCartTotal(), marketConfig.currencySymbol)}</span>
                   </div>
                   <div className="cart-summary-row cart-summary-total">
                     <span>Total</span>
-                    <span>${getCartTotal()}</span>
+                    <span>{formatPrice(getCartTotal(), marketConfig.currencySymbol)}</span>
                   </div>
                 </div>
                 <button onClick={handleCheckout} className="checkout-btn">

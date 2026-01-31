@@ -85,6 +85,124 @@ export class ShopifyStorefrontAPI {
     return result;
   }
 
+  // Customer Authentication - Create Account
+  async createCustomerAccount(email: string, password: string, firstName?: string, lastName?: string): Promise<any> {
+    const mutation = `
+      mutation customerCreate($input: CustomerCreateInput!) {
+        customerCreate(input: $input) {
+          customer {
+            id
+            email
+            firstName
+            lastName
+          }
+          customerUserErrors {
+            code
+            field
+            message
+          }
+        }
+      }
+    `;
+
+    const input = {
+      email,
+      password,
+      firstName: firstName || '',
+      lastName: lastName || '',
+      acceptsMarketing: false,
+    };
+
+    try {
+      const response = await this.query(mutation, { input });
+
+      if (response.errors) {
+        throw new Error(`GraphQL errors: ${JSON.stringify(response.errors)}`);
+      }
+
+      if (response.data?.customerCreate?.customerUserErrors?.length > 0) {
+        const error = response.data.customerCreate.customerUserErrors[0];
+        throw new Error(error.message || 'Failed to create account');
+      }
+
+      return response.data.customerCreate.customer;
+    } catch (error) {
+      console.error('Error creating customer account:', error);
+      throw error;
+    }
+  }
+
+  // Customer Authentication - Login with Access Token
+  async customerLogin(email: string, password: string): Promise<any> {
+    const mutation = `
+      mutation customerAccessTokenCreate($input: CustomerAccessTokenCreateInput!) {
+        customerAccessTokenCreate(input: $input) {
+          customerAccessToken {
+            accessToken
+            expiresAt
+          }
+          customerUserErrors {
+            code
+            field
+            message
+          }
+        }
+      }
+    `;
+
+    const input = { email, password };
+
+    try {
+      const response = await this.query(mutation, { input });
+
+      if (response.errors) {
+        throw new Error(`GraphQL errors: ${JSON.stringify(response.errors)}`);
+      }
+
+      if (response.data?.customerAccessTokenCreate?.customerUserErrors?.length > 0) {
+        const error = response.data.customerAccessTokenCreate.customerUserErrors[0];
+        throw new Error(error.message || 'Invalid email or password');
+      }
+
+      const accessToken = response.data.customerAccessTokenCreate.customerAccessToken.accessToken;
+
+      // Fetch customer details with the access token
+      const customer = await this.getCustomerDetails(accessToken);
+      return { ...customer, accessToken };
+    } catch (error) {
+      console.error('Error logging in customer:', error);
+      throw error;
+    }
+  }
+
+  // Get Customer Details with Access Token
+  async getCustomerDetails(accessToken: string): Promise<any> {
+    const query = `
+      query getCustomer($customerAccessToken: String!) {
+        customer(customerAccessToken: $customerAccessToken) {
+          id
+          email
+          firstName
+          lastName
+          displayName
+        }
+      }
+    `;
+
+    try {
+      const response = await this.query(query, { customerAccessToken: accessToken });
+
+      if (response.errors) {
+        throw new Error(`GraphQL errors: ${JSON.stringify(response.errors)}`);
+      }
+
+      return response.data.customer;
+    } catch (error) {
+      console.error('Error fetching customer details:', error);
+      throw error;
+    }
+  }
+
   async fetchProducts(first: number = 10, countryCode?: string): Promise<ShopifyProduct[]> {
     const query = `
       query getProducts($first: Int!, $country: CountryCode) @inContext(country: $country) {

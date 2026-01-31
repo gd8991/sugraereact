@@ -9,6 +9,7 @@ import ExperienceSection from './components/ExperienceSection';
 import Footer from './components/Footer';
 import CartSidebar from './components/CartSidebar';
 import GuestCheckout from './components/GuestCheckout';
+import AuthModal from './components/AuthModal';
 
 function App() {
   const [isLoading, setIsLoading] = useState(true);
@@ -32,6 +33,7 @@ function App() {
 
       <CartSidebar />
       <GuestCheckout />
+      <AuthModal />
     </div>
   );
 }

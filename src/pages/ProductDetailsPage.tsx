@@ -21,6 +21,7 @@ const ProductDetailsPage = () => {
   const [activeAccordion, setActiveAccordion] = useState<number | null>(null);
   const [selectedImageIndex, setSelectedImageIndex] = useState(0);
   const [selectedColor, setSelectedColor] = useState('maroon');
+  const [isDescriptionExpanded, setIsDescriptionExpanded] = useState(false);
   const pageRef = useRef<HTMLDivElement>(null);
   const imageRef = useRef<HTMLDivElement>(null);
   const contentRef = useRef<HTMLDivElement>(null);
@@ -153,17 +154,29 @@ const ProductDetailsPage = () => {
                 <span className="section-label">Luxury Fragrance</span>
               </div>
 
-              <h1 className="product-details-name">{product.name}</h1>
+              <div className="product-title-section">
+                <h1 className="product-details-name">{product.name}</h1>
+                <span className="product-size-info">50ml / 1.7 fl oz</span>
+              </div>
 
-              {product.notes && (
-                <p className="product-details-notes">{product.notes}</p>
-              )}
-
+              
               <div className="product-details-divider"></div>
 
               <div className="product-details-description">
                 <h3 className="description-title">The Story</h3>
-                <p className="description-content">{product.description}</p>
+                <p className="description-content">
+                  {isDescriptionExpanded
+                    ? product.description
+                    : `${product.description.substring(0, 120)}...`}
+                  {product.description.length > 120 && (
+                    <button
+                      className="view-more-btn"
+                      onClick={() => setIsDescriptionExpanded(!isDescriptionExpanded)}
+                    >
+                      {isDescriptionExpanded ? ' View less' : ' View more'}
+                    </button>
+                  )}
+                </p>
               </div>
 
               <div className="product-details-footer">

@@ -4043,7 +4043,7 @@ footer {
 
 .newsletter-word {
     font-family: var(--font-display);
-    font-size: clamp(4rem, 10vw, 12rem);
+    font-size: clamp(1.5rem, 4vw, 4rem);
     letter-spacing: 0.15em;
     color: var(--champagne-gold);
     display: inline-block;
@@ -4054,6 +4054,7 @@ footer {
 .newsletter-form-inline {
     display: flex;
     align-items: baseline;
+    justify-content: center;
     gap: 1.5rem;
     padding-bottom: 1rem;
     max-width: 800px;
@@ -4067,8 +4068,8 @@ footer {
 
 .newsletter-label {
     font-family: var(--font-display);
-    font-size: clamp(2.5rem, 5vw, 4.5rem);
-    letter-spacing: 0.1em;
+    font-size: clamp(1.5rem, 4vw, 4rem);
+    letter-spacing: 0.15em;
     color: var(--champagne-gold);
     white-space: nowrap;
     flex-shrink: 0;
@@ -4082,10 +4083,10 @@ footer {
 
 .newsletter-input-inline {
     flex: 1;
-    padding: 0.5rem 1.5rem;
+    padding: 0.5rem 0;
     font-family: var(--font-display);
-    font-size: clamp(2rem, 4vw, 3.5rem);
-    letter-spacing: 0.05em;
+    font-size: clamp(1.5rem, 4vw, 4rem);
+    letter-spacing: 0.15em;
     color: #1A1A1A;
     background: transparent;
     border: none;
@@ -4093,6 +4094,7 @@ footer {
     text-transform: uppercase;
     will-change: transform, opacity;
     caret-color: var(--champagne-gold);
+    text-align: center;
 }
 
 .newsletter-input-inline::placeholder {
@@ -4118,8 +4120,8 @@ footer {
 
 .newsletter-submit-text {
     font-family: var(--font-display);
-    font-size: clamp(2.5rem, 5vw, 4.5rem);
-    letter-spacing: 0.1em;
+    font-size: clamp(1.5rem, 4vw, 4rem);
+    letter-spacing: 0.15em;
     color: var(--champagne-gold);
     background: transparent;
     border: none;

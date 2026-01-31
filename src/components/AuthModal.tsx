@@ -14,6 +14,7 @@ const AuthModal: FC = () => {
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
   const [rememberMe, setRememberMe] = useState(false);
+  const [acceptsEmailMarketing, setAcceptsEmailMarketing] = useState(true);
   const [error, setError] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
 
@@ -62,6 +63,7 @@ const AuthModal: FC = () => {
           setFirstName('');
           setLastName('');
           setRememberMe(false);
+          setAcceptsEmailMarketing(true);
           setError('');
           setMode('login');
           setIsSubmitting(false); // Reset submitting state
@@ -84,7 +86,7 @@ const AuthModal: FC = () => {
           setIsSubmitting(false);
           return;
         }
-        await signup(email, password, firstName, lastName);
+        await signup(email, password, firstName, lastName, acceptsEmailMarketing);
       }
     } catch (err) {
       setError(err instanceof Error ? err.message : 'An error occurred');
@@ -185,6 +187,20 @@ const AuthModal: FC = () => {
                     className="auth-checkbox"
                   />
                   <span>Remember me</span>
+                </label>
+              </div>
+            )}
+
+            {mode === 'signup' && (
+              <div className="auth-form-group auth-checkbox-group">
+                <label className="auth-checkbox-label">
+                  <input
+                    type="checkbox"
+                    checked={acceptsEmailMarketing}
+                    onChange={(e) => setAcceptsEmailMarketing(e.target.checked)}
+                    className="auth-checkbox"
+                  />
+                  <span>Subscribe to email updates</span>
                 </label>
               </div>
             )}

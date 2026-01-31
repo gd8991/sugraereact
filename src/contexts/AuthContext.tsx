@@ -20,7 +20,7 @@ interface AuthState {
 interface AuthContextType {
   state: AuthState;
   login: (email: string, password: string, rememberMe: boolean) => Promise<void>;
-  signup: (email: string, password: string, firstName?: string, lastName?: string) => Promise<void>;
+  signup: (email: string, password: string, firstName?: string, lastName?: string, acceptsEmailMarketing?: boolean) => Promise<void>;
   logout: () => void;
   openAuthModal: () => void;
   closeAuthModal: () => void;
@@ -98,13 +98,20 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     email: string,
     password: string,
     firstName?: string,
-    lastName?: string
+    lastName?: string,
+    acceptsEmailMarketing?: boolean
   ) => {
     try {
       setState(prev => ({ ...prev, isLoading: true }));
 
       // Call real Shopify Customer API to create account
-      await shopifyAPI.createCustomerAccount(email, password, firstName, lastName);
+      await shopifyAPI.createCustomerAccount(
+        email,
+        password,
+        firstName,
+        lastName,
+        acceptsEmailMarketing
+      );
 
       // After creating account, login to get access token
       const loginResponse = await shopifyAPI.customerLogin(email, password);

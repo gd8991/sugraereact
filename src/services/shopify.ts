@@ -86,7 +86,13 @@ export class ShopifyStorefrontAPI {
   }
 
   // Customer Authentication - Create Account
-  async createCustomerAccount(email: string, password: string, firstName?: string, lastName?: string): Promise<any> {
+  async createCustomerAccount(
+    email: string,
+    password: string,
+    firstName?: string,
+    lastName?: string,
+    acceptsEmailMarketing?: boolean
+  ): Promise<any> {
     const mutation = `
       mutation customerCreate($input: CustomerCreateInput!) {
         customerCreate(input: $input) {
@@ -110,7 +116,7 @@ export class ShopifyStorefrontAPI {
       password,
       firstName: firstName || '',
       lastName: lastName || '',
-      acceptsMarketing: false,
+      acceptsMarketing: acceptsEmailMarketing || false,
     };
 
     try {

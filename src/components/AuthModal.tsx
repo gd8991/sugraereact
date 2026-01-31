@@ -13,6 +13,7 @@ const AuthModal: FC = () => {
   const [password, setPassword] = useState('');
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
+  const [phone, setPhone] = useState('');
   const [rememberMe, setRememberMe] = useState(false);
   const [acceptsEmailMarketing, setAcceptsEmailMarketing] = useState(true);
   const [error, setError] = useState('');
@@ -62,6 +63,7 @@ const AuthModal: FC = () => {
           setPassword('');
           setFirstName('');
           setLastName('');
+          setPhone('');
           setRememberMe(false);
           setAcceptsEmailMarketing(true);
           setError('');
@@ -86,7 +88,7 @@ const AuthModal: FC = () => {
           setIsSubmitting(false);
           return;
         }
-        await signup(email, password, firstName, lastName, acceptsEmailMarketing);
+        await signup(email, password, firstName, lastName, phone, acceptsEmailMarketing);
       }
     } catch (err) {
       setError(err instanceof Error ? err.message : 'An error occurred');
@@ -117,33 +119,49 @@ const AuthModal: FC = () => {
         <div className="auth-modal-content">
           <form onSubmit={handleSubmit} className="auth-form">
             {mode === 'signup' && (
-              <div className="auth-form-row">
+              <>
+                <div className="auth-form-row">
+                  <div className="auth-form-group">
+                    <label htmlFor="firstName" className="auth-label">
+                      First Name *
+                    </label>
+                    <input
+                      type="text"
+                      id="firstName"
+                      value={firstName}
+                      onChange={(e) => setFirstName(e.target.value)}
+                      className="auth-input"
+                      required={mode === 'signup'}
+                    />
+                  </div>
+                  <div className="auth-form-group">
+                    <label htmlFor="lastName" className="auth-label">
+                      Last Name
+                    </label>
+                    <input
+                      type="text"
+                      id="lastName"
+                      value={lastName}
+                      onChange={(e) => setLastName(e.target.value)}
+                      className="auth-input"
+                    />
+                  </div>
+                </div>
+
                 <div className="auth-form-group">
-                  <label htmlFor="firstName" className="auth-label">
-                    First Name *
+                  <label htmlFor="phone" className="auth-label">
+                    Phone Number
                   </label>
                   <input
-                    type="text"
-                    id="firstName"
-                    value={firstName}
-                    onChange={(e) => setFirstName(e.target.value)}
+                    type="tel"
+                    id="phone"
+                    value={phone}
+                    onChange={(e) => setPhone(e.target.value)}
                     className="auth-input"
-                    required={mode === 'signup'}
+                    placeholder="+1234567890"
                   />
                 </div>
-                <div className="auth-form-group">
-                  <label htmlFor="lastName" className="auth-label">
-                    Last Name
-                  </label>
-                  <input
-                    type="text"
-                    id="lastName"
-                    value={lastName}
-                    onChange={(e) => setLastName(e.target.value)}
-                    className="auth-input"
-                  />
-                </div>
-              </div>
+              </>
             )}
 
             <div className="auth-form-group">

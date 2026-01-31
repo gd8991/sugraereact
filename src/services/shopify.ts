@@ -91,6 +91,7 @@ export class ShopifyStorefrontAPI {
     password: string,
     firstName?: string,
     lastName?: string,
+    phone?: string,
     acceptsEmailMarketing?: boolean
   ): Promise<any> {
     const mutation = `
@@ -101,6 +102,7 @@ export class ShopifyStorefrontAPI {
             email
             firstName
             lastName
+            phone
           }
           customerUserErrors {
             code
@@ -111,13 +113,21 @@ export class ShopifyStorefrontAPI {
       }
     `;
 
-    const input = {
+    const input: any = {
       email,
       password,
       firstName: firstName || '',
       lastName: lastName || '',
       acceptsMarketing: acceptsEmailMarketing || false,
     };
+
+    // Add phone if provided
+    if (phone) {
+      input.phone = phone;
+    }
+
+    // Note: Storefront API doesn't support addresses in customerCreate
+    // Addresses would need to be added separately via customerAddressCreate mutation after account creation
 
     try {
       const response = await this.query(mutation, { input });

@@ -20,7 +20,7 @@ interface AuthState {
 interface AuthContextType {
   state: AuthState;
   login: (email: string, password: string, rememberMe: boolean) => Promise<void>;
-  signup: (email: string, password: string, firstName?: string, lastName?: string, acceptsEmailMarketing?: boolean) => Promise<void>;
+  signup: (email: string, password: string, firstName?: string, lastName?: string, phone?: string, acceptsEmailMarketing?: boolean) => Promise<void>;
   logout: () => void;
   openAuthModal: () => void;
   closeAuthModal: () => void;
@@ -99,6 +99,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     password: string,
     firstName?: string,
     lastName?: string,
+    phone?: string,
     acceptsEmailMarketing?: boolean
   ) => {
     try {
@@ -110,6 +111,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
         password,
         firstName,
         lastName,
+        phone,
         acceptsEmailMarketing
       );
 

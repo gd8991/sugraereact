@@ -3532,6 +3532,127 @@ footer {
     box-shadow: 0 0 0 3px rgba(212, 175, 55, 0.1);
 }
 
+.auth-phone-input-wrapper {
+    display: flex;
+    gap: 0.5rem;
+}
+
+.auth-country-dropdown {
+    position: relative;
+    flex: 0 0 120px;
+}
+
+.auth-country-code-button {
+    width: 100%;
+    padding: 0.9rem 1rem;
+    border: 1px solid rgba(212, 175, 55, 0.2);
+    border-radius: 6px;
+    font-family: var(--font-body);
+    font-size: 1rem;
+    color: #1A1A1A;
+    background: white;
+    cursor: none;
+    transition: var(--transition);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.auth-country-code-button:hover {
+    border-color: var(--champagne-gold);
+}
+
+.auth-country-dropdown-menu {
+    position: absolute;
+    top: calc(100% + 0.5rem);
+    left: 0;
+    width: 320px;
+    max-height: 400px;
+    background: white;
+    border: 1px solid rgba(212, 175, 55, 0.2);
+    border-radius: 8px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+    z-index: 1000;
+    overflow: hidden;
+}
+
+.auth-country-search {
+    width: 100%;
+    padding: 0.8rem 1rem;
+    border: none;
+    border-bottom: 1px solid rgba(212, 175, 55, 0.1);
+    font-family: var(--font-body);
+    font-size: 0.9rem;
+    color: #1A1A1A;
+    outline: none;
+}
+
+.auth-country-search:focus {
+    background: rgba(212, 175, 55, 0.03);
+}
+
+.auth-country-list {
+    max-height: 340px;
+    overflow-y: auto;
+}
+
+.auth-country-item {
+    width: 100%;
+    padding: 0.75rem 1rem;
+    border: none;
+    background: white;
+    cursor: none;
+    transition: var(--transition);
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    text-align: left;
+}
+
+.auth-country-item:hover {
+    background: rgba(212, 175, 55, 0.1);
+}
+
+.auth-country-code {
+    font-family: var(--font-body);
+    font-size: 0.9rem;
+    color: var(--champagne-gold);
+    font-weight: 600;
+    min-width: 50px;
+}
+
+.auth-country-name {
+    font-family: var(--font-body);
+    font-size: 0.9rem;
+    color: #1A1A1A;
+}
+
+.auth-country-no-results {
+    padding: 1.5rem;
+    text-align: center;
+    font-family: var(--font-body);
+    font-size: 0.9rem;
+    color: #999;
+}
+
+.auth-phone-input {
+    flex: 1;
+    padding: 0.9rem 1rem;
+    border: 1px solid rgba(212, 175, 55, 0.2);
+    border-radius: 6px;
+    font-family: var(--font-body);
+    font-size: 1rem;
+    color: #1A1A1A;
+    background: white;
+    transition: var(--transition);
+}
+
+.auth-phone-input:focus {
+    outline: none;
+    border-color: var(--champagne-gold);
+    box-shadow: 0 0 0 3px rgba(212, 175, 55, 0.1);
+}
+
 .auth-checkbox-group {
     flex-direction: row;
     align-items: center;

@@ -115,13 +115,13 @@ const NewsletterSection: FC = () => {
             }
           }, 1.0)
 
-          // Phase 5: Move ENTER to extreme left and SUBMIT to extreme right
+          // Phase 5: Move ENTER left and SUBMIT right (keep them visible)
           .to(enterRef.current, {
-            x: -250,
+            x: -100,
             duration: 0.8,
           }, 1.2)
           .to(submitRef.current, {
-            x: 150,
+            x: 100,
             duration: 0.8,
           }, 1.2);
 
@@ -165,6 +165,9 @@ const NewsletterSection: FC = () => {
   return (
     <section ref={sectionRef} className="newsletter-section">
       <div className="newsletter-container">
+        {/* Static heading */}
+        <h3 className="newsletter-heading">Subscribe to newsletters</h3>
+
         {/* Single row containing both title words and form elements */}
         <div className="newsletter-content-row">
           <span ref={stayRef} className="newsletter-word">STAY</span>

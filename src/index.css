@@ -4032,6 +4032,17 @@ footer {
     position: relative;
 }
 
+.newsletter-heading {
+    font-family: var(--font-body);
+    font-size: clamp(1rem, 2vw, 1.5rem);
+    font-weight: 400;
+    letter-spacing: 0.1em;
+    color: var(--champagne-gold);
+    text-align: center;
+    text-transform: uppercase;
+    margin-bottom: 2rem;
+}
+
 .newsletter-content-row {
     display: flex;
     align-items: baseline;

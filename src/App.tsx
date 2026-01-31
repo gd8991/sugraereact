@@ -6,6 +6,7 @@ import Hero from './components/Hero';
 import FounderSection from './components/FounderSection';
 import CollectionSection from './components/CollectionSection';
 import ExperienceSection from './components/ExperienceSection';
+import NewsletterSection from './components/NewsletterSection';
 import Footer from './components/Footer';
 import CartSidebar from './components/CartSidebar';
 import GuestCheckout from './components/GuestCheckout';
@@ -20,57 +21,56 @@ function App() {
     setIsLoading(false);
   };
 
-  // GSAP Smooth Scroll
-  useEffect(() => {
-    if (!isReady || !gsap || isLoading) return;
+  // GSAP Smooth Scroll - Disabled for now as it interferes with cursor
+  // useEffect(() => {
+  //   if (!isReady || !gsap || isLoading) return;
 
-    let scrollSmoother: any;
+  //   let scrollSmoother: any;
 
-    const initSmoothScroll = async () => {
-      try {
-        const { default: ScrollSmoother } = await import('gsap/ScrollSmoother');
-        const { default: ScrollTrigger } = await import('gsap/ScrollTrigger');
+  //   const initSmoothScroll = async () => {
+  //     try {
+  //       const { default: ScrollSmoother } = await import('gsap/ScrollSmoother');
+  //       const { default: ScrollTrigger } = await import('gsap/ScrollTrigger');
 
-        gsap.registerPlugin(ScrollSmoother, ScrollTrigger);
+  //       gsap.registerPlugin(ScrollSmoother, ScrollTrigger);
 
-        scrollSmoother = ScrollSmoother.create({
-          smooth: 1.2,
-          effects: true,
-          smoothTouch: 0.1,
-        });
-      } catch (error) {
-        console.error('Error initializing smooth scroll:', error);
-      }
-    };
+  //       scrollSmoother = ScrollSmoother.create({
+  //         smooth: 1.2,
+  //         effects: true,
+  //         smoothTouch: 0.1,
+  //       });
+  //     } catch (error) {
+  //       console.error('Error initializing smooth scroll:', error);
+  //     }
+  //   };
 
-    initSmoothScroll();
+  //   initSmoothScroll();
 
-    return () => {
-      if (scrollSmoother) {
-        scrollSmoother.kill();
-      }
-    };
-  }, [gsap, isReady, isLoading]);
+  //   return () => {
+  //     if (scrollSmoother) {
+  //       scrollSmoother.kill();
+  //     }
+  //   };
+  // }, [gsap, isReady, isLoading]);
 
   return (
-    <div id="smooth-wrapper">
-      <div id="smooth-content">
-        <CustomCursor />
+    <>
+      <CustomCursor />
 
-        {isLoading && <Loader onLoadComplete={handleLoadComplete} />}
+      {isLoading && <Loader onLoadComplete={handleLoadComplete} />}
 
-        <Header />
-        <Hero />
-        <CollectionSection />
-        <FounderSection />
-        <ExperienceSection />
-        <Footer />
+      <Header />
+      <Hero />
+      <CollectionSection />
+      <FounderSection />
+      <ExperienceSection />
+      <NewsletterSection />
+      <Footer />
 
-        <CartSidebar />
-        <GuestCheckout />
-        <AuthModal />
-      </div>
-    </div>
+      <CartSidebar />
+      <GuestCheckout />
+      <AuthModal />
+    </>
   );
 }
 

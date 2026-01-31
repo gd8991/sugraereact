@@ -4011,3 +4011,184 @@ footer {
         border-radius: 8px;
     }
 }
+
+/* Newsletter Section with Scroll Animations */
+.newsletter-section {
+    width: 100%;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(180deg, #fafaf8 0%, #f5f5f0 100%);
+    position: relative;
+    overflow: hidden;
+    padding: 8rem 2rem;
+}
+
+.newsletter-container {
+    width: 100%;
+    max-width: 1600px;
+    margin: 0 auto;
+    position: relative;
+}
+
+.newsletter-content-row {
+    display: flex;
+    align-items: baseline;
+    justify-content: center;
+    gap: 1ch;
+    width: 100%;
+    position: relative;
+}
+
+.newsletter-word {
+    font-family: var(--font-display);
+    font-size: clamp(4rem, 10vw, 12rem);
+    letter-spacing: 0.15em;
+    color: var(--champagne-gold);
+    display: inline-block;
+    will-change: transform;
+    flex-shrink: 0;
+}
+
+.newsletter-form-inline {
+    display: flex;
+    align-items: baseline;
+    gap: 1.5rem;
+    padding-bottom: 1rem;
+    max-width: 800px;
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%) scaleX(0);
+    transform-origin: center;
+    opacity: 0;
+    pointer-events: none;
+}
+
+.newsletter-label {
+    font-family: var(--font-display);
+    font-size: clamp(2.5rem, 5vw, 4.5rem);
+    letter-spacing: 0.1em;
+    color: var(--champagne-gold);
+    white-space: nowrap;
+    flex-shrink: 0;
+}
+
+.newsletter-label .char,
+.newsletter-submit-text .char {
+    display: inline-block;
+    will-change: transform, opacity;
+}
+
+.newsletter-input-inline {
+    flex: 1;
+    padding: 0.5rem 1.5rem;
+    font-family: var(--font-display);
+    font-size: clamp(2rem, 4vw, 3.5rem);
+    letter-spacing: 0.05em;
+    color: #1A1A1A;
+    background: transparent;
+    border: none;
+    outline: none;
+    text-transform: uppercase;
+    will-change: transform, opacity;
+    caret-color: var(--champagne-gold);
+}
+
+.newsletter-input-inline::placeholder {
+    color: rgba(26, 26, 26, 0.3);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.newsletter-input-inline:focus::placeholder {
+    opacity: 0.5;
+}
+
+/* Ensure input stays transparent even with autofill */
+.newsletter-input-inline:-webkit-autofill,
+.newsletter-input-inline:-webkit-autofill:hover,
+.newsletter-input-inline:-webkit-autofill:focus {
+    -webkit-box-shadow: 0 0 0 1000px transparent inset !important;
+    box-shadow: 0 0 0 1000px transparent inset !important;
+    -webkit-text-fill-color: #1A1A1A !important;
+    background-color: transparent !important;
+    background-image: none !important;
+}
+
+.newsletter-submit-text {
+    font-family: var(--font-display);
+    font-size: clamp(2.5rem, 5vw, 4.5rem);
+    letter-spacing: 0.1em;
+    color: var(--champagne-gold);
+    background: transparent;
+    border: none;
+    cursor: none;
+    transition: all 0.3s ease;
+    white-space: nowrap;
+    flex-shrink: 0;
+    text-transform: uppercase;
+    padding: 0;
+}
+
+.newsletter-submit-text:hover:not(:disabled) {
+    transform: translateX(10px);
+}
+
+.newsletter-submit-text:disabled {
+    opacity: 0.6;
+}
+
+.newsletter-message {
+    font-family: var(--font-body);
+    font-size: 1rem;
+    text-align: center;
+    margin-top: 2rem;
+    padding: 1rem;
+    border-radius: 4px;
+}
+
+.newsletter-message.success {
+    color: var(--champagne-gold);
+    background: rgba(212, 175, 55, 0.1);
+}
+
+.newsletter-message.error {
+    color: #c41e3a;
+    background: rgba(196, 30, 58, 0.1);
+}
+
+/* Responsive Newsletter */
+@media (max-width: 768px) {
+    .newsletter-section {
+        min-height: 80vh;
+        padding: 4rem 1rem;
+    }
+
+    .newsletter-content-row {
+        flex-direction: column;
+        gap: 1.5rem;
+    }
+
+    .newsletter-word {
+        font-size: clamp(2.5rem, 12vw, 4rem);
+    }
+
+    .newsletter-form-inline {
+        flex-direction: column;
+        gap: 1.5rem;
+        align-items: flex-start;
+        width: 100%;
+    }
+
+    .newsletter-label,
+    .newsletter-submit-text {
+        font-size: clamp(1.5rem, 6vw, 2rem);
+    }
+
+    .newsletter-input-inline {
+        font-size: clamp(1.2rem, 5vw, 1.8rem);
+        padding: 0.8rem 1rem;
+        width: 100%;
+    }
+}

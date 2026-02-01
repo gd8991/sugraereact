@@ -286,12 +286,82 @@ export class ShopifyStorefrontAPI {
       throw error;
     }
   }
+
+  // Newsletter Subscription - Klaviyo Integration
+  async subscribeToNewsletter(email: string): Promise<any> {
+    // Validate email format
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(email)) {
+      throw new Error('Please enter a valid email address');
+    }
+
+    const KLAVIYO_PUBLIC_KEY = 'V37AnZ';
+    const KLAVIYO_LIST_ID = 'UZsAfp';
+
+    try {
+      // Subscribe to Klaviyo list using their Client API
+      const response = await fetch(`https://a.klaviyo.com/client/subscriptions/?company_id=${KLAVIYO_PUBLIC_KEY}`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'revision': '2023-02-22',
+        },
+        body: JSON.stringify({
+          data: {
+            type: 'subscription',
+            attributes: {
+              list_id: KLAVIYO_LIST_ID,
+              email: email.toLowerCase(),
+            },
+          },
+        }),
+      });
+
+      console.log('Klaviyo response status:', response.status);
+      console.log('Klaviyo response headers:', Object.fromEntries(response.headers.entries()));
+
+      if (!response.ok) {
+        let errorData;
+        try {
+          const text = await response.text();
+          errorData = text ? JSON.parse(text) : null;
+        } catch (e) {
+          errorData = 'Could not parse error response';
+        }
+        console.error('Klaviyo subscription error - Status:', response.status);
+        console.error('Klaviyo subscription error - Data:', errorData);
+
+        // Check if already subscribed
+        if (response.status === 409) {
+          return { success: true, message: 'Email already subscribed' };
+        }
+
+        throw new Error('Failed to subscribe. Please try again.');
+      }
+
+      // Success - Klaviyo Client API may return empty response on success
+      if (response.status === 202 || response.status === 204) {
+        console.log('📧 Klaviyo subscription successful (no content):', email);
+        return { success: true, message: 'Successfully subscribed' };
+      }
+
+      // Try to parse JSON response if there is content
+      const text = await response.text();
+      const result = text ? JSON.parse(text) : {};
+      console.log('📧 Klaviyo subscription successful:', email);
+
+      return { success: true, message: 'Successfully subscribed', data: result };
+    } catch (error: any) {
+      console.error('Error subscribing to newsletter:', error);
+      throw new Error(error.message || 'Something went wrong. Please try again.');
+    }
+  }
 }
 
 // Initialize with your Storefront API access token
 export const shopifyAPI = new ShopifyStorefrontAPI(
   'sugrae.myshopify.com',
-  '7989ca7d6768798fa773b37d614cb61d'
+  '24a13024b1eb34f0560cabed19202592'
 );
 
 // Test function - you can call this in browser console to debug

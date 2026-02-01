@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 import type { FC } from 'react';
 import { useGSAP } from '../hooks/useGSAP';
+import { shopifyAPI } from '../services/shopify';
 
 const NewsletterSection: FC = () => {
   const { gsap, isReady } = useGSAP();
@@ -151,12 +152,16 @@ const NewsletterSection: FC = () => {
     setMessage('');
 
     try {
-      // Simulate API call
-      await new Promise((resolve) => setTimeout(resolve, 1500));
-      setMessage('Thank you for subscribing!');
-      setEmail('');
-    } catch (error) {
-      setMessage('Something went wrong. Please try again.');
+      // Subscribe to newsletter via Shopify
+      const result = await shopifyAPI.subscribeToNewsletter(email);
+
+      if (result.success) {
+        setMessage('Thank you for subscribing!');
+        setEmail('');
+      }
+    } catch (error: any) {
+      console.error('Newsletter subscription error:', error);
+      setMessage(error.message || 'Something went wrong. Please try again.');
     } finally {
       setIsSubmitting(false);
     }

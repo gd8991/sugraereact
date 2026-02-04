@@ -1,5 +1,4 @@
 import { useState, useEffect } from 'react';
-import CustomCursor from './components/CustomCursor';
 import Loader from './components/Loader';
 import Header from './components/Header';
 import Hero from './components/Hero';
@@ -55,8 +54,6 @@ function App() {
 
   return (
     <>
-      <CustomCursor />
-
       {isLoading && <Loader onLoadComplete={handleLoadComplete} />}
 
       <Header />

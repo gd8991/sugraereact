@@ -87,7 +87,6 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    cursor: none;
 }
 
 html {
@@ -107,56 +106,7 @@ body {
     -moz-osx-font-smoothing: grayscale;
 }
 
-/* Custom Cursor - Ultra Luxury Style */
-.cursor {
-    width: 40px;
-    height: 40px;
-    border: 2px solid var(--gold);
-    border-radius: 50%;
-    position: fixed;
-    pointer-events: none;
-    z-index: 10000;
-    transition: background 0.2s cubic-bezier(0.16, 1, 0.3, 1),
-                border-width 0.2s cubic-bezier(0.16, 1, 0.3, 1),
-                box-shadow 0.2s cubic-bezier(0.16, 1, 0.3, 1);
-    transform: translate(-50%, -50%);
-    mix-blend-mode: difference;
-    box-shadow: 0 0 20px rgba(212, 175, 55, 0.3), inset 0 0 10px rgba(212, 175, 55, 0.1);
-    backdrop-filter: blur(5px);
-}
 
-.cursor-dot {
-    width: 6px;
-    height: 6px;
-    background: radial-gradient(circle, var(--gold), var(--champagne-gold));
-    border-radius: 50%;
-    position: fixed;
-    pointer-events: none;
-    z-index: 10001;
-    transform: translate(-50%, -50%);
-    box-shadow: 0 0 10px rgba(212, 175, 55, 0.8);
-    animation: pulse 2s ease-in-out infinite;
-}
-
-@keyframes pulse {
-    0%, 100% { opacity: 1; transform: translate(-50%, -50%) scale(1); }
-    50% { opacity: 0.8; transform: translate(-50%, -50%) scale(1.2); }
-}
-
-.cursor.hover {
-    background: radial-gradient(circle, rgba(212, 175, 55, 0.2), rgba(212, 175, 55, 0.05));
-    border-width: 3px;
-    box-shadow: 0 0 40px rgba(212, 175, 55, 0.6), inset 0 0 20px rgba(212, 175, 55, 0.2);
-}
-
-a, button {
-    cursor: none;
-}
-
-/* Override cursor for interactive buttons */
-.product-cta-cart {
-    cursor: pointer !important;
-}
 
 
 /* Luxe Loader */
@@ -342,7 +292,6 @@ nav {
     font-size: 0.75rem;
     font-family: var(--font-body);
     letter-spacing: 0.05rem;
-    cursor: none;
     transition: var(--transition);
 }
 
@@ -390,7 +339,6 @@ nav {
     font-family: var(--font-body);
     letter-spacing: 0.05rem;
     text-align: left;
-    cursor: none;
     transition: var(--transition);
     border-bottom: 1px solid rgba(212, 175, 55, 0.1);
     display: flex;
@@ -428,7 +376,6 @@ nav {
     border: none;
     color: var(--gold);
     font-size: 1.2rem;
-    cursor: none;
     padding: 0.5rem;
     transition: var(--transition);
 }
@@ -1835,7 +1782,6 @@ footer {
     display: none;
     flex-direction: column;
     gap: 6px;
-    cursor: none;
     z-index: 1001;
 }
 
@@ -1920,7 +1866,6 @@ footer {
     letter-spacing: 0.2rem;
     text-transform: uppercase;
     transition: var(--transition);
-    cursor: none;
     position: relative;
 }
 
@@ -2062,7 +2007,6 @@ footer {
     border: none;
     color: var(--gold);
     font-size: 2rem;
-    cursor: none;
     transition: var(--transition);
     width: 40px;
     height: 40px;
@@ -2207,7 +2151,6 @@ footer {
     height: 24px;
     border-radius: 50%;
     border: 2px solid transparent;
-    cursor: none;
     transition: var(--transition);
     padding: 0;
     position: relative;
@@ -2263,7 +2206,6 @@ footer {
     border: none;
     color: var(--gold);
     font-size: 1rem;
-    cursor: none;
     width: 30px;
     height: 30px;
     display: flex;
@@ -2289,7 +2231,6 @@ footer {
     border: none;
     color: var(--light-gray);
     font-size: 0.7rem;
-    cursor: none;
     transition: var(--transition);
     text-transform: uppercase;
     letter-spacing: 0.1em;
@@ -2337,7 +2278,6 @@ footer {
     font-weight: 500;
     letter-spacing: 0.2rem;
     text-transform: uppercase;
-    cursor: none;
     transition: var(--transition);
 }
 
@@ -2396,7 +2336,6 @@ footer {
     border: none;
     color: var(--gold);
     font-size: 2rem;
-    cursor: none;
     transition: var(--transition);
     width: 40px;
     height: 40px;
@@ -2542,7 +2481,6 @@ footer {
     font-size: 1rem;
     letter-spacing: 0.2rem;
     text-transform: uppercase;
-    cursor: none;
     transition: var(--transition);
 }
 
@@ -2642,7 +2580,6 @@ footer {
     font-family: var(--font-body);
     letter-spacing: 0.1rem;
     text-transform: uppercase;
-    cursor: none;
     transition: var(--transition);
 }
 
@@ -2684,7 +2621,6 @@ footer {
     border: none;
     color: var(--gold);
     text-decoration: none;
-    cursor: none;
     transition: var(--transition);
     padding: 0;
     font-family: var(--font-body);
@@ -2827,7 +2763,6 @@ footer {
     border-radius: 8px;
     overflow: hidden;
     border: 2px solid transparent;
-    cursor: none;
     transition: var(--transition);
     flex-shrink: 0;
 }
@@ -3047,7 +2982,6 @@ footer {
     color: var(--champagne-gold);
     font-family: var(--font-body);
     font-size: 0.9rem;
-    cursor: none;
     text-decoration: underline;
     padding: 0;
     margin-left: 0.3rem;
@@ -3116,7 +3050,6 @@ footer {
     height: 40px;
     border-radius: 50%;
     border: 2px solid transparent;
-    cursor: none;
     transition: var(--transition);
     padding: 0;
     position: relative;
@@ -3254,7 +3187,6 @@ footer {
     padding: 1.8rem 1.5rem;
     background: transparent;
     border: none;
-    cursor: none;
     transition: var(--transition);
     text-align: left;
 }
@@ -3356,7 +3288,6 @@ footer {
 .user-toggle {
     background: none;
     border: none;
-    cursor: none;
     padding: 0.5rem;
     display: flex;
     align-items: center;
@@ -3423,7 +3354,6 @@ footer {
     font-family: var(--font-body);
     font-size: 0.9rem;
     color: #2A2A2A;
-    cursor: none;
     transition: var(--transition);
     font-weight: 500;
 }
@@ -3482,7 +3412,6 @@ footer {
     border: none;
     font-size: 1.5rem;
     color: #999;
-    cursor: none;
     padding: 0.5rem;
     line-height: 1;
     transition: var(--transition);
@@ -3560,7 +3489,6 @@ footer {
     font-size: 1rem;
     color: #1A1A1A;
     background: white;
-    cursor: none;
     transition: var(--transition);
     display: flex;
     align-items: center;
@@ -3610,7 +3538,6 @@ footer {
     padding: 0.75rem 1rem;
     border: none;
     background: white;
-    cursor: none;
     transition: var(--transition);
     display: flex;
     align-items: center;
@@ -3671,7 +3598,6 @@ footer {
     display: flex;
     align-items: center;
     gap: 0.6rem;
-    cursor: none;
     font-family: var(--font-body);
     font-size: 0.9rem;
     color: #555;
@@ -3680,7 +3606,6 @@ footer {
 .auth-checkbox {
     width: 18px;
     height: 18px;
-    cursor: none;
     accent-color: var(--champagne-gold);
 }
 
@@ -3703,7 +3628,6 @@ footer {
     font-size: 1rem;
     color: white;
     letter-spacing: 0.1em;
-    cursor: none;
     transition: var(--transition);
     margin-top: 0.5rem;
 }
@@ -3760,7 +3684,6 @@ footer {
     font-family: var(--font-body);
     font-size: 0.9rem;
     color: var(--champagne-gold);
-    cursor: none;
     transition: var(--transition);
 }
 
@@ -3848,7 +3771,6 @@ footer {
         margin-left: 0;
     }
     .footer-content { flex-direction: column; gap: 2rem; }
-    .cursor, .cursor-dot { display: none; }
 
     .cart-sidebar { width: 100%; }
     .checkout-content {
@@ -4136,7 +4058,6 @@ footer {
     color: var(--champagne-gold);
     background: transparent;
     border: none;
-    cursor: none;
     transition: all 0.3s ease;
     white-space: nowrap;
     flex-shrink: 0;

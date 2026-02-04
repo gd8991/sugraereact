@@ -5,7 +5,6 @@ import { useProducts } from '../contexts/ProductContext';
 import { useGSAP } from '../hooks/useGSAP';
 import CartSidebar from '../components/CartSidebar';
 import GuestCheckout from '../components/GuestCheckout';
-import CustomCursor from '../components/CustomCursor';
 import Price from '../components/Price';
 import { EXPERIENCE_ITEMS } from '../utils/constants';
 import type { Product } from '../types';
@@ -96,7 +95,6 @@ const ProductDetailsPage = () => {
 
   return (
     <>
-      <CustomCursor />
       <div className="product-details-page" ref={pageRef}>
         {/* Header */}
         <header className="product-details-header">

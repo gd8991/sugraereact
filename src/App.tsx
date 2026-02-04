@@ -10,47 +10,23 @@ import Footer from './components/Footer';
 import CartSidebar from './components/CartSidebar';
 import GuestCheckout from './components/GuestCheckout';
 import AuthModal from './components/AuthModal';
-import { useGSAP } from './hooks/useGSAP';
-
 function App() {
   const [isLoading, setIsLoading] = useState(true);
-  const { gsap, isReady } = useGSAP();
 
   const handleLoadComplete = () => {
     setIsLoading(false);
   };
 
-  // GSAP Smooth Scroll - Disabled for now as it interferes with cursor
-  // useEffect(() => {
-  //   if (!isReady || !gsap || isLoading) return;
-
-  //   let scrollSmoother: any;
-
-  //   const initSmoothScroll = async () => {
-  //     try {
-  //       const { default: ScrollSmoother } = await import('gsap/ScrollSmoother');
-  //       const { default: ScrollTrigger } = await import('gsap/ScrollTrigger');
-
-  //       gsap.registerPlugin(ScrollSmoother, ScrollTrigger);
-
-  //       scrollSmoother = ScrollSmoother.create({
-  //         smooth: 1.2,
-  //         effects: true,
-  //         smoothTouch: 0.1,
-  //       });
-  //     } catch (error) {
-  //       console.error('Error initializing smooth scroll:', error);
-  //     }
-  //   };
-
-  //   initSmoothScroll();
-
-  //   return () => {
-  //     if (scrollSmoother) {
-  //       scrollSmoother.kill();
-  //     }
-  //   };
-  // }, [gsap, isReady, isLoading]);
+  // Kill all ScrollTrigger instances when App unmounts (e.g. navigating to a product page).
+  // Pinned sections move their DOM nodes into GSAP-owned wrappers; if those pins aren't
+  // killed before React removes the elements, React throws "removeChild" errors.
+  useEffect(() => {
+    return () => {
+      if (typeof window !== 'undefined' && window.ScrollTrigger) {
+        window.ScrollTrigger.getAll().forEach((st: any) => st.kill(true));
+      }
+    };
+  }, []);
 
   return (
     <>

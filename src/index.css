@@ -1297,6 +1297,12 @@ nav {
     text-align: center;
     transition: var(--transition);
     cursor: pointer;
+    display: block;
+    font-family: inherit;
+}
+
+.product-cta:visited {
+    color: var(--gold);
 }
 
 .product-cta-cart {

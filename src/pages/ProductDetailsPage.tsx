@@ -13,7 +13,7 @@ const ProductDetailsPage = () => {
   const { productId } = useParams<{ productId: string }>();
   const navigate = useNavigate();
   const { addItem, openCart } = useCart();
-  const { state: { products } } = useProducts();
+  const { state: { products, isLoading } } = useProducts();
   const { gsap, isReady } = useGSAP();
   const [product, setProduct] = useState<Product | null>(null);
   const [quantity, setQuantity] = useState(1);
@@ -35,16 +35,15 @@ const ProductDetailsPage = () => {
   ];
 
   useEffect(() => {
-    if (products.length > 0 && productId) {
-      const foundProduct = products.find(p => p.id === productId);
-      if (foundProduct) {
-        setProduct(foundProduct);
-      } else {
-        // Product not found, redirect to home
-        navigate('/');
-      }
+    if (isLoading || !productId) return;
+    const foundProduct = products.find(p => p.id === productId);
+    if (foundProduct) {
+      setProduct(foundProduct);
+    } else {
+      // Product not found, redirect to home
+      navigate('/');
     }
-  }, [products, productId, navigate]);
+  }, [products, isLoading, productId, navigate]);
 
   // Animate on mount
   useEffect(() => {

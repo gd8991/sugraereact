@@ -57,7 +57,7 @@ const Hero: FC = () => {
     });
 
     // Parallax effect for hero video
-    gsap.to(videoRef.current, {
+    const parallax = gsap.to(videoRef.current, {
       scrollTrigger: {
         trigger: heroRef.current,
         start: 'top top',
@@ -68,6 +68,11 @@ const Hero: FC = () => {
       ease: 'none'
     });
 
+    return () => {
+      if (parallax.scrollTrigger) parallax.scrollTrigger.kill(true);
+      parallax.kill();
+      timeline.kill();
+    };
   }, [isReady, gsap]);
 
   const scrollToSection = (href: string) => {

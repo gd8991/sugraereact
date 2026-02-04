@@ -33,6 +33,10 @@ const FounderSection: FC = () => {
         ease: 'power3.out'
       }, '-=0.5');
 
+    return () => {
+      if (timeline.scrollTrigger) timeline.scrollTrigger.kill(true);
+      timeline.kill();
+    };
   }, [isReady, gsap]);
 
   return (

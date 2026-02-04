@@ -10,15 +10,22 @@ interface ProductCardProps {
 }
 
 const ProductCard: FC<ProductCardProps> = ({ product }) => {
-  const navigate = useNavigate();
   const { addItem, openCart } = useCart();
+  const navigate = useNavigate();
 
   const handleAddToCart = () => {
     addItem(product);
     openCart();
   };
 
-  const openProductPage = () => {
+  const handleViewDetails = () => {
+    // Kill all ScrollTrigger instances synchronously BEFORE navigating.
+    // Pinned sections have their DOM nodes moved into GSAP wrappers; if we don't
+    // unpin them first, React's commit phase will throw "removeChild" errors
+    // because the nodes are no longer children of their original parents.
+    if (window.ScrollTrigger) {
+      window.ScrollTrigger.getAll().forEach((st: any) => st.kill(true));
+    }
     navigate(`/product/${product.id}`);
   };
 
@@ -50,7 +57,7 @@ const ProductCard: FC<ProductCardProps> = ({ product }) => {
             <div className="product-price"><Price product={product} /></div>
             <div className="product-actions">
               <button
-                onClick={openProductPage}
+                onClick={handleViewDetails}
                 className="product-cta product-cta-reserve"
               >
                 View Details

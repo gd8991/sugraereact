@@ -16,11 +16,14 @@ const ExperienceSection: FC = () => {
     const cards = cardRefs.current.filter(Boolean);
     if (!cards.length) return;
 
+    // Track all timelines/tweens so we can kill them on cleanup
+    const tweens: any[] = [];
+
     // Check if mobile device
     const isMobile = window.innerWidth <= 768;
 
     // Title animation
-    gsap.from(titleRef.current, {
+    tweens.push(gsap.from(titleRef.current, {
       scrollTrigger: {
         trigger: titleRef.current,
         start: 'top 80%'
@@ -29,11 +32,11 @@ const ExperienceSection: FC = () => {
       y: 50,
       opacity: 0,
       ease: 'power3.out'
-    });
+    }));
 
     // Quote fade-in (runs on both mobile and desktop)
     if (quoteRef.current) {
-      gsap.from(quoteRef.current, {
+      tweens.push(gsap.from(quoteRef.current, {
         scrollTrigger: {
           trigger: quoteRef.current,
           start: 'top 85%'
@@ -42,13 +45,13 @@ const ExperienceSection: FC = () => {
         y: 30,
         opacity: 0,
         ease: 'power3.out'
-      });
+      }));
     }
 
     // On mobile, use simple scroll animations
     if (isMobile) {
       cards.forEach((card) => {
-        gsap.from(card, {
+        tweens.push(gsap.from(card, {
           scrollTrigger: {
             trigger: card,
             start: 'top 85%',
@@ -58,9 +61,15 @@ const ExperienceSection: FC = () => {
           y: 60,
           opacity: 0,
           ease: 'power3.out'
-        });
+        }));
       });
-      return;
+
+      return () => {
+        tweens.forEach(t => {
+          if (t.scrollTrigger) t.scrollTrigger.kill(true);
+          t.kill();
+        });
+      };
     }
 
     // Desktop: Pin the section and transition between cards
@@ -105,7 +114,15 @@ const ExperienceSection: FC = () => {
       }, timePosition + 0.3);
     });
 
-
+    return () => {
+      // Kill the pinned timeline's ScrollTrigger first (unpins the DOM node)
+      if (tl.scrollTrigger) tl.scrollTrigger.kill(true);
+      tl.kill();
+      tweens.forEach(t => {
+        if (t.scrollTrigger) t.scrollTrigger.kill(true);
+        t.kill();
+      });
+    };
   }, [isReady, gsap]);
 
   return (

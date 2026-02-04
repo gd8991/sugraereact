@@ -14,8 +14,10 @@ const CollectionSection: FC = () => {
   useEffect(() => {
     if (!isReady || !gsap) return;
 
+    const tweens: any[] = [];
+
     // Title fade-in
-    gsap.from(titleRef.current, {
+    tweens.push(gsap.from(titleRef.current, {
       scrollTrigger: {
         trigger: titleRef.current,
         start: 'top 80%'
@@ -24,11 +26,11 @@ const CollectionSection: FC = () => {
       y: 50,
       opacity: 0,
       ease: 'power3.out'
-    });
+    }));
 
     // Subtitle fade-in (slightly delayed after title)
     if (subtitleRef.current) {
-      gsap.from(subtitleRef.current, {
+      tweens.push(gsap.from(subtitleRef.current, {
         scrollTrigger: {
           trigger: subtitleRef.current,
           start: 'top 80%'
@@ -38,14 +40,14 @@ const CollectionSection: FC = () => {
         opacity: 0,
         ease: 'power3.out',
         delay: 0.2
-      });
+      }));
     }
 
     // Product cards staggered fade-in
     const cards = cardRefs.current.filter(Boolean);
     if (cards.length) {
       cards.forEach((card, i) => {
-        gsap.from(card, {
+        tweens.push(gsap.from(card, {
           scrollTrigger: {
             trigger: card,
             start: 'top 85%'
@@ -55,10 +57,16 @@ const CollectionSection: FC = () => {
           opacity: 0,
           ease: 'power3.out',
           delay: i * 0.15
-        });
+        }));
       });
     }
 
+    return () => {
+      tweens.forEach(t => {
+        if (t.scrollTrigger) t.scrollTrigger.kill(true);
+        t.kill();
+      });
+    };
   }, [isReady, gsap]);
 
   return (

@@ -9,7 +9,7 @@ const NewsletterSection: FC = () => {
   const stayRef = useRef<HTMLSpanElement>(null);
   const updatedRef = useRef<HTMLSpanElement>(null);
   const enterRef = useRef<HTMLSpanElement>(null);
-  const submitRef = useRef<HTMLSpanElement>(null);
+  const submitRef = useRef<HTMLButtonElement>(null);
   const emailInputRef = useRef<HTMLInputElement>(null);
   const formRef = useRef<HTMLFormElement>(null);
 
@@ -20,6 +20,15 @@ const NewsletterSection: FC = () => {
   useEffect(() => {
     if (!isReady || !gsap || !sectionRef.current) return;
 
+    // Use a mutable container so the cleanup closure always sees the latest values,
+    // even after the async initAnimation has resolved.
+    const refs: { tl: any; enterSplit: any; submitSplit: any; cancelled: boolean } = {
+      tl: null,
+      enterSplit: null,
+      submitSplit: null,
+      cancelled: false,
+    };
+
     const initAnimation = async () => {
       try {
         const { default: SplitText } = await import('gsap/SplitText');
@@ -27,33 +36,36 @@ const NewsletterSection: FC = () => {
 
         gsap.registerPlugin(SplitText, ScrollTrigger);
 
+        // If cleanup already ran while we were awaiting the dynamic imports, bail out
+        if (refs.cancelled) return;
+
+        // Split "ENTER" and "SUBMIT" into characters
+        refs.enterSplit = new SplitText(enterRef.current, {
+          type: 'chars',
+          charsClass: 'char',
+        });
+
+        refs.submitSplit = new SplitText(submitRef.current, {
+          type: 'chars',
+          charsClass: 'char',
+        });
+
         // Create a timeline for the entire animation sequence
-        const tl = gsap.timeline({
+        refs.tl = gsap.timeline({
           scrollTrigger: {
             trigger: sectionRef.current,
-            start: 'top top', // Section reaches top of viewport
-            end: '+=200%', // Longer scroll distance for animation
-            scrub: 1, // Smooth scroll scrubbing
-            pin: true, // Pin the section while animating
+            start: 'top top',
+            end: '+=200%',
+            scrub: 1,
+            pin: true,
             anticipatePin: 1,
             markers: false,
           },
         });
 
-        // Split "ENTER" and "SUBMIT" into characters
-        const enterSplit = new SplitText(enterRef.current, {
-          type: 'chars',
-          charsClass: 'char',
-        });
-
-        const submitSplit = new SplitText(submitRef.current, {
-          type: 'chars',
-          charsClass: 'char',
-        });
-
         // Set initial states
-        gsap.set(enterSplit.chars, { opacity: 0, x: 20 });
-        gsap.set(submitSplit.chars, { opacity: 0, x: -20 });
+        gsap.set(refs.enterSplit.chars, { opacity: 0, x: 20 });
+        gsap.set(refs.submitSplit.chars, { opacity: 0, x: -20 });
         gsap.set(emailInputRef.current, {
           opacity: 0,
           scaleX: 0,
@@ -61,8 +73,7 @@ const NewsletterSection: FC = () => {
         });
 
         // Animation sequence - add a pause at the beginning
-        tl
-          // Pause for 0.3s (30% of scroll progress) before starting animation
+        refs.tl
           .to({}, { duration: 0.3 })
 
           // Phase 1: Move STAY to left and UPDATED to right, fade them out, expand form
@@ -88,7 +99,7 @@ const NewsletterSection: FC = () => {
           }, 0.3)
 
           // Phase 2: Reveal ENTER characters one by one (from left)
-          .to(enterSplit.chars, {
+          .to(refs.enterSplit.chars, {
             opacity: 1,
             x: 0,
             stagger: 0.05,
@@ -96,7 +107,7 @@ const NewsletterSection: FC = () => {
           }, 0.6)
 
           // Phase 3: Reveal SUBMIT characters one by one (from right)
-          .to(submitSplit.chars, {
+          .to(refs.submitSplit.chars, {
             opacity: 1,
             x: 0,
             stagger: 0.05,
@@ -109,7 +120,6 @@ const NewsletterSection: FC = () => {
             scaleX: 1,
             duration: 0.4,
             onComplete: () => {
-              // Auto-focus the input to show blinking cursor
               if (emailInputRef.current) {
                 emailInputRef.current.focus();
               }
@@ -125,24 +135,22 @@ const NewsletterSection: FC = () => {
             x: 100,
             duration: 0.8,
           }, 1.2);
-
-        // Cleanup
-        return () => {
-          enterSplit.revert();
-          submitSplit.revert();
-          tl.kill();
-        };
       } catch (error) {
         console.error('Error initializing newsletter animation:', error);
       }
     };
 
-    const cleanup = initAnimation();
+    initAnimation();
 
     return () => {
-      if (cleanup && typeof cleanup === 'object' && 'then' in cleanup) {
-        cleanup.then((fn) => fn && fn());
+      refs.cancelled = true;
+      if (refs.tl) {
+        // Kill the pinned ScrollTrigger first to restore DOM before React unmounts
+        if (refs.tl.scrollTrigger) refs.tl.scrollTrigger.kill(true);
+        refs.tl.kill();
       }
+      if (refs.enterSplit) refs.enterSplit.revert();
+      if (refs.submitSplit) refs.submitSplit.revert();
     };
   }, [gsap, isReady]);
 

@@ -8,6 +8,7 @@ const ExperienceSection: FC = () => {
   const sectionRef = useRef<HTMLElement>(null);
   const titleRef = useRef<HTMLHeadingElement>(null);
   const cardRefs = useRef<HTMLDivElement[]>([]);
+  const quoteRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     if (!isReady || !gsap) return;
@@ -29,6 +30,20 @@ const ExperienceSection: FC = () => {
       opacity: 0,
       ease: 'power3.out'
     });
+
+    // Quote fade-in (runs on both mobile and desktop)
+    if (quoteRef.current) {
+      gsap.from(quoteRef.current, {
+        scrollTrigger: {
+          trigger: quoteRef.current,
+          start: 'top 85%'
+        },
+        duration: 1,
+        y: 30,
+        opacity: 0,
+        ease: 'power3.out'
+      });
+    }
 
     // On mobile, use simple scroll animations
     if (isMobile) {
@@ -90,6 +105,7 @@ const ExperienceSection: FC = () => {
       }, timePosition + 0.3);
     });
 
+
   }, [isReady, gsap]);
 
   return (
@@ -118,7 +134,7 @@ const ExperienceSection: FC = () => {
           ))}
         </div>
 
-        <div style={{ maxWidth: '800px', margin: '4rem auto 0', textAlign: 'center', padding: '0 2rem' }}>
+        <div ref={quoteRef} style={{ maxWidth: '800px', margin: '4rem auto 0', textAlign: 'center', padding: '0 2rem' }}>
           <p style={{ fontSize: '1.125rem', lineHeight: 1.8, color: 'var(--light-gray)', fontFamily: 'var(--font-serif)' }}>
             "Every Sugraé perfume is a testament to the belief that motherhood doesn't mean
             sacrificing elegance. It means redefining it."

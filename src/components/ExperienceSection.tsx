@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react';
+import { useEffect, useLayoutEffect, useRef } from 'react';
 import type { FC } from 'react';
 import { useGSAP } from '../hooks/useGSAP';
 import { EXPERIENCE_ITEMS } from '../utils/constants';
@@ -10,6 +10,17 @@ const ExperienceSection: FC = () => {
   const cardRefs = useRef<HTMLDivElement[]>([]);
   const quoteRef = useRef<HTMLDivElement>(null);
 
+  // Kill ALL ScrollTriggers synchronously before React removes any DOM nodes.
+  // useLayoutEffect cleanup fires before the DOM is mutated, preventing the
+  // "removeChild: node is not a child" error caused by GSAP's pin wrappers.
+  useLayoutEffect(() => {
+    return () => {
+      if (typeof window !== 'undefined' && window.ScrollTrigger) {
+        window.ScrollTrigger.getAll().forEach((st: any) => st.kill(true));
+      }
+    };
+  }, []);
+
   useEffect(() => {
     if (!isReady || !gsap) return;
 
@@ -18,6 +29,9 @@ const ExperienceSection: FC = () => {
 
     // Track all timelines/tweens so we can kill them on cleanup
     const tweens: any[] = [];
+    // Flag to prevent double-kill: ProductCard kills all ScrollTriggers before
+    // navigating away; the cleanup below must not kill (and revert) pins again.
+    let pinKilled = false;
 
     // Check if mobile device
     const isMobile = window.innerWidth <= 768;
@@ -87,7 +101,8 @@ const ExperienceSection: FC = () => {
         end: `+=${cards.length * 100}%`,
         scrub: 1,
         pin: true,
-        anticipatePin: 1
+        anticipatePin: 1,
+        onKill: () => { pinKilled = true; }
       }
     });
 
@@ -115,8 +130,13 @@ const ExperienceSection: FC = () => {
     });
 
     return () => {
-      // Kill the pinned timeline's ScrollTrigger first (unpins the DOM node)
-      if (tl.scrollTrigger) tl.scrollTrigger.kill(true);
+      // Kill the pinned timeline's ScrollTrigger first (unpins the DOM node).
+      // If ProductCard already killed all ScrollTriggers before navigating away,
+      // the pin was already reverted — killing again would cause a "removeChild"
+      // error because GSAP tries to revert DOM moves a second time.
+      if (!pinKilled && tl.scrollTrigger) {
+        tl.scrollTrigger.kill(true);
+      }
       tl.kill();
       tweens.forEach(t => {
         if (t.scrollTrigger) t.scrollTrigger.kill(true);

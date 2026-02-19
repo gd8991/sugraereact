@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useLayoutEffect, useRef, useState } from 'react';
 import type { FC } from 'react';
 import { useGSAP } from '../hooks/useGSAP';
 import { shopifyAPI } from '../services/shopify';
@@ -17,140 +17,102 @@ const NewsletterSection: FC = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [message, setMessage] = useState('');
 
+  // Kill ALL ScrollTriggers synchronously before React removes DOM nodes.
+  // useLayoutEffect cleanup fires before DOM mutations, preventing the
+  // "removeChild" error caused by GSAP pin wrappers moving elements.
+  // This uses window.ScrollTrigger (CDN instance) which is the same instance
+  // used by this component's animation (via window.gsap).
+  useLayoutEffect(() => {
+    return () => {
+      if (typeof window !== 'undefined' && window.ScrollTrigger) {
+        window.ScrollTrigger.getAll().forEach((st: any) => st.kill(true));
+      }
+    };
+  }, []);
+
   useEffect(() => {
     if (!isReady || !gsap || !sectionRef.current) return;
 
-    // Use a mutable container so the cleanup closure always sees the latest values,
-    // even after the async initAnimation has resolved.
-    const refs: { tl: any; enterSplit: any; submitSplit: any; cancelled: boolean } = {
+    const g = window.gsap;
+    const ST = window.ScrollTrigger;
+    if (!g || !ST) return;
+
+    // Track state in a mutable ref-like object so cleanup always sees latest values
+    const state: { tl: any; cancelled: boolean } = {
       tl: null,
-      enterSplit: null,
-      submitSplit: null,
       cancelled: false,
     };
 
-    const initAnimation = async () => {
-      try {
-        const { default: SplitText } = await import('gsap/SplitText');
-        const { default: ScrollTrigger } = await import('gsap/ScrollTrigger');
-
-        gsap.registerPlugin(SplitText, ScrollTrigger);
-
-        // If cleanup already ran while we were awaiting the dynamic imports, bail out
-        if (refs.cancelled) return;
-
-        // Split "ENTER" and "SUBMIT" into characters
-        refs.enterSplit = new SplitText(enterRef.current, {
-          type: 'chars',
-          charsClass: 'char',
-        });
-
-        refs.submitSplit = new SplitText(submitRef.current, {
-          type: 'chars',
-          charsClass: 'char',
-        });
-
-        // Create a timeline for the entire animation sequence
-        refs.tl = gsap.timeline({
-          scrollTrigger: {
-            trigger: sectionRef.current,
-            start: 'top top',
-            end: '+=200%',
-            scrub: 1,
-            pin: true,
-            anticipatePin: 1,
-            markers: false,
-          },
-        });
-
-        // Set initial states
-        gsap.set(refs.enterSplit.chars, { opacity: 0, x: 20 });
-        gsap.set(refs.submitSplit.chars, { opacity: 0, x: -20 });
-        gsap.set(emailInputRef.current, {
-          opacity: 0,
-          scaleX: 0,
-          transformOrigin: 'center center'
-        });
-
-        // Animation sequence - add a pause at the beginning
-        refs.tl
-          .to({}, { duration: 0.3 })
-
-          // Phase 1: Move STAY to left and UPDATED to right, fade them out, expand form
-          .to(stayRef.current, {
-            x: -200,
-            opacity: 0,
-            duration: 1,
-          }, 0.3)
-          .to(updatedRef.current, {
-            x: 200,
-            opacity: 0,
-            duration: 1,
-          }, 0.3)
-          .to(formRef.current, {
-            scaleX: 1,
-            opacity: 1,
-            duration: 1,
-            onStart: () => {
-              if (formRef.current) {
-                formRef.current.style.pointerEvents = 'auto';
-              }
-            }
-          }, 0.3)
-
-          // Phase 2: Reveal ENTER characters one by one (from left)
-          .to(refs.enterSplit.chars, {
-            opacity: 1,
-            x: 0,
-            stagger: 0.05,
-            duration: 0.3,
-          }, 0.6)
-
-          // Phase 3: Reveal SUBMIT characters one by one (from right)
-          .to(refs.submitSplit.chars, {
-            opacity: 1,
-            x: 0,
-            stagger: 0.05,
-            duration: 0.3,
-          }, 0.8)
-
-          // Phase 4: Grow email input from center
-          .to(emailInputRef.current, {
-            opacity: 1,
-            scaleX: 1,
-            duration: 0.4,
-            onComplete: () => {
-              if (emailInputRef.current) {
-                emailInputRef.current.focus();
-              }
-            }
-          }, 1.0)
-
-          // Phase 5: Move ENTER left and SUBMIT right (keep them visible)
-          .to(enterRef.current, {
-            x: -100,
-            duration: 0.8,
-          }, 1.2)
-          .to(submitRef.current, {
-            x: 100,
-            duration: 0.8,
-          }, 1.2);
-      } catch (error) {
-        console.error('Error initializing newsletter animation:', error);
-      }
+    // Simple character split using vanilla DOM (no SplitText plugin needed)
+    const splitChars = (el: HTMLElement | null): HTMLSpanElement[] => {
+      if (!el) return [];
+      const text = el.textContent || '';
+      el.innerHTML = '';
+      return text.split('').map(char => {
+        const span = document.createElement('span');
+        span.className = 'char';
+        span.style.display = 'inline-block';
+        span.textContent = char === ' ' ? '\u00A0' : char;
+        el.appendChild(span);
+        return span;
+      });
     };
 
-    initAnimation();
+    const enterChars = splitChars(enterRef.current);
+    const submitChars = splitChars(submitRef.current);
+
+    if (state.cancelled) return;
+
+    // Set initial states
+    g.set(enterChars, { opacity: 0, x: 20 });
+    g.set(submitChars, { opacity: 0, x: -20 });
+    g.set(emailInputRef.current, { opacity: 0, scaleX: 0, transformOrigin: 'center center' });
+
+    // Create a timeline for the entire animation sequence using CDN ScrollTrigger
+    state.tl = g.timeline({
+      scrollTrigger: {
+        trigger: sectionRef.current,
+        start: 'top top',
+        end: '+=200%',
+        scrub: 1,
+        pin: true,
+        anticipatePin: 1,
+        markers: false,
+      },
+    });
+
+    state.tl
+      .to({}, { duration: 0.3 })
+      .to(stayRef.current, { x: -200, opacity: 0, duration: 1 }, 0.3)
+      .to(updatedRef.current, { x: 200, opacity: 0, duration: 1 }, 0.3)
+      .to(formRef.current, {
+        scaleX: 1,
+        opacity: 1,
+        duration: 1,
+        onStart: () => {
+          if (formRef.current) formRef.current.style.pointerEvents = 'auto';
+        }
+      }, 0.3)
+      .to(enterChars, { opacity: 1, x: 0, stagger: 0.05, duration: 0.3 }, 0.6)
+      .to(submitChars, { opacity: 1, x: 0, stagger: 0.05, duration: 0.3 }, 0.8)
+      .to(emailInputRef.current, {
+        opacity: 1,
+        scaleX: 1,
+        duration: 0.4,
+        onComplete: () => { if (emailInputRef.current) emailInputRef.current.focus(); }
+      }, 1.0)
+      .to(enterRef.current, { x: -100, duration: 0.8 }, 1.2)
+      .to(submitRef.current, { x: 100, duration: 0.8 }, 1.2);
 
     return () => {
-      refs.cancelled = true;
-      if (refs.tl) {
-        // Kill the pinned ScrollTrigger first to restore DOM before React unmounts
-        if (refs.tl.scrollTrigger) refs.tl.scrollTrigger.kill(true);
-        refs.tl.kill();
+      state.cancelled = true;
+      // Revert char splits by restoring original text
+      if (enterRef.current) enterRef.current.textContent = 'ENTER';
+      if (submitRef.current) submitRef.current.textContent = 'SUBMIT';
+      if (state.tl) {
+        if (state.tl.scrollTrigger) state.tl.scrollTrigger.kill(true);
+        state.tl.kill();
       }
-      if (refs.enterSplit) refs.enterSplit.revert();
-      if (refs.submitSplit) refs.submitSplit.revert();
     };
   }, [gsap, isReady]);
 

@@ -3,6 +3,7 @@ import { useParams, useNavigate } from 'react-router-dom';
 import { useCart } from '../contexts/CartContext';
 import { useProducts } from '../contexts/ProductContext';
 import { useGSAP } from '../hooks/useGSAP';
+import { useLenis } from '../hooks/useLenis';
 import CartSidebar from '../components/CartSidebar';
 import GuestCheckout from '../components/GuestCheckout';
 import Price from '../components/Price';
@@ -15,6 +16,9 @@ const ProductDetailsPage = () => {
   const { addItem, openCart } = useCart();
   const { state: { products, isLoading } } = useProducts();
   const { gsap, isReady } = useGSAP();
+
+  // Initialize Lenis smooth scroll
+  useLenis();
   const [product, setProduct] = useState<Product | null>(null);
   const [quantity, setQuantity] = useState(1);
   const [activeAccordion, setActiveAccordion] = useState<number | null>(null);

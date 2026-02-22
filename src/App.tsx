@@ -10,8 +10,13 @@ import Footer from './components/Footer';
 import CartSidebar from './components/CartSidebar';
 import GuestCheckout from './components/GuestCheckout';
 import AuthModal from './components/AuthModal';
+import { useLenis } from './hooks/useLenis';
+
 function App() {
   const [isLoading, setIsLoading] = useState(true);
+
+  // Initialize Lenis smooth scroll
+  useLenis();
 
   const handleLoadComplete = () => {
     setIsLoading(false);

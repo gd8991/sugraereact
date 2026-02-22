@@ -111,7 +111,14 @@ const Hero: FC = () => {
 
   const scrollToSection = (href: string) => {
     const target = document.querySelector(href);
-    if (target) {
+    if (target && window.lenis) {
+      // Use Lenis for smooth scroll
+      window.lenis.scrollTo(target, {
+        offset: 0,
+        duration: 1.5,
+      });
+    } else if (target) {
+      // Fallback to native scroll
       target.scrollIntoView({
         behavior: 'smooth',
         block: 'start'

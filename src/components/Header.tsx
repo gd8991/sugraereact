@@ -26,7 +26,7 @@ const Header: FC = () => {
   }, []);
 
   const scrollToSection = (href: string) => {
-    const target = document.querySelector(href);
+    const target = document.querySelector(href) as HTMLElement | null;
     if (target && window.lenis) {
       // Use Lenis for smooth scroll
       window.lenis.scrollTo(target, {

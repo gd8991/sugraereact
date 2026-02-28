@@ -12,13 +12,17 @@ const CollectionSection: FC = () => {
   const subtitleRef = useRef<HTMLParagraphElement>(null);
   const carouselRef = useRef<HTMLDivElement>(null);
 
+  const SLIDES_PER_VIEW = 3;
+  const maxIndex = Math.max(0, products.length - SLIDES_PER_VIEW);
+  const showNav = products.length > SLIDES_PER_VIEW;
+
   const goToPrev = useCallback(() => {
-    setCurrentIndex(i => (i - 1 + products.length) % products.length);
-  }, [products.length]);
+    setCurrentIndex(i => Math.max(0, i - 1));
+  }, []);
 
   const goToNext = useCallback(() => {
-    setCurrentIndex(i => (i + 1) % products.length);
-  }, [products.length]);
+    setCurrentIndex(i => Math.min(maxIndex, i + 1));
+  }, [maxIndex]);
 
   useEffect(() => {
     if (!isReady || !gsap) return;
@@ -97,18 +101,20 @@ const CollectionSection: FC = () => {
         ) : (
           <>
             <div className="carousel-wrapper" ref={carouselRef}>
-              <button
-                className="carousel-btn carousel-btn-prev"
-                onClick={goToPrev}
-                aria-label="Previous product"
-              >
-                &#8249;
-              </button>
+              {showNav && (
+                <button
+                  className="carousel-btn carousel-btn-prev"
+                  onClick={goToPrev}
+                  aria-label="Previous product"
+                >
+                  &#8249;
+                </button>
+              )}
 
               <div className="carousel-viewport">
                 <div
                   className="carousel-track"
-                  style={{ transform: `translateX(-${currentIndex * 100}%)` }}
+                  style={{ transform: `translateX(-${currentIndex * (100 / SLIDES_PER_VIEW)}%)` }}
                 >
                   {products.map((product, index) => (
                     <div key={product.id} className="carousel-slide">
@@ -118,18 +124,20 @@ const CollectionSection: FC = () => {
                 </div>
               </div>
 
-              <button
-                className="carousel-btn carousel-btn-next"
-                onClick={goToNext}
-                aria-label="Next product"
-              >
-                &#8250;
-              </button>
+              {showNav && (
+                <button
+                  className="carousel-btn carousel-btn-next"
+                  onClick={goToNext}
+                  aria-label="Next product"
+                >
+                  &#8250;
+                </button>
+              )}
             </div>
 
-            {products.length > 1 && (
+            {showNav && (
               <div className="carousel-dots">
-                {products.map((_, index) => (
+                {Array.from({ length: maxIndex + 1 }).map((_, index) => (
                   <button
                     key={index}
                     className={`carousel-dot${index === currentIndex ? ' active' : ''}`}

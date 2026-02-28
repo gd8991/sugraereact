@@ -898,7 +898,7 @@ nav {
     display: flex;
     align-items: center;
     gap: 2rem;
-    max-width: 600px;
+    max-width: 1400px;
     margin: 0 auto;
 }
 
@@ -914,8 +914,10 @@ nav {
 }
 
 .carousel-slide {
-    flex: 0 0 100%;
-    width: 100%;
+    flex: 0 0 33.333%;
+    width: 33.333%;
+    padding: 0 1.5rem;
+    box-sizing: border-box;
 }
 
 .carousel-btn {
@@ -3791,6 +3793,7 @@ footer {
     .founder-container { grid-template-columns: 1fr; }
     .carousel-wrapper { gap: 0.75rem; }
     .carousel-btn { width: 40px; height: 40px; font-size: 1.8rem; }
+    .carousel-slide { flex: 0 0 100%; width: 100%; padding: 0; }
     .product-actions { flex-direction: column; }
     .experience-grid { grid-template-columns: 1fr 1fr; }
 

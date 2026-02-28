@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState, useCallback } from 'react';
 import type { FC } from 'react';
 import { useGSAP } from '../hooks/useGSAP';
 import { useProducts } from '../contexts/ProductContext';
@@ -7,9 +7,18 @@ import ProductCard from './ProductCard';
 const CollectionSection: FC = () => {
   const { gsap, isReady } = useGSAP();
   const { state: { products, isLoading, error } } = useProducts();
+  const [currentIndex, setCurrentIndex] = useState(0);
   const titleRef = useRef<HTMLHeadingElement>(null);
   const subtitleRef = useRef<HTMLParagraphElement>(null);
-  const cardRefs = useRef<HTMLDivElement[]>([]);
+  const carouselRef = useRef<HTMLDivElement>(null);
+
+  const goToPrev = useCallback(() => {
+    setCurrentIndex(i => (i - 1 + products.length) % products.length);
+  }, [products.length]);
+
+  const goToNext = useCallback(() => {
+    setCurrentIndex(i => (i + 1) % products.length);
+  }, [products.length]);
 
   useEffect(() => {
     if (!isReady || !gsap) return;
@@ -43,22 +52,19 @@ const CollectionSection: FC = () => {
       }));
     }
 
-    // Product cards staggered fade-in
-    const cards = cardRefs.current.filter(Boolean);
-    if (cards.length) {
-      cards.forEach((card, i) => {
-        tweens.push(gsap.from(card, {
-          scrollTrigger: {
-            trigger: card,
-            start: 'top 85%'
-          },
-          duration: 0.9,
-          y: 40,
-          opacity: 0,
-          ease: 'power3.out',
-          delay: i * 0.15
-        }));
-      });
+    // Carousel fade-in
+    if (carouselRef.current) {
+      tweens.push(gsap.from(carouselRef.current, {
+        scrollTrigger: {
+          trigger: carouselRef.current,
+          start: 'top 85%'
+        },
+        duration: 1,
+        y: 40,
+        opacity: 0,
+        ease: 'power3.out',
+        delay: 0.4
+      }));
     }
 
     return () => {
@@ -87,22 +93,53 @@ const CollectionSection: FC = () => {
         ) : error ? (
           <div className="error-state">
             <p className="error-text">Unable to load products. Showing our signature collection.</p>
-            <div className="product-grid">
-              {products.map((product, index) => (
-                <div key={product.id} ref={el => { if (el) cardRefs.current[index] = el; }}>
-                  <ProductCard product={product} index={index} />
-                </div>
-              ))}
-            </div>
           </div>
         ) : (
-          <div className="product-grid">
-            {products.map((product, index) => (
-              <div key={product.id} ref={el => { if (el) cardRefs.current[index] = el; }}>
-                <ProductCard product={product} index={index} />
+          <>
+            <div className="carousel-wrapper" ref={carouselRef}>
+              <button
+                className="carousel-btn carousel-btn-prev"
+                onClick={goToPrev}
+                aria-label="Previous product"
+              >
+                &#8249;
+              </button>
+
+              <div className="carousel-viewport">
+                <div
+                  className="carousel-track"
+                  style={{ transform: `translateX(-${currentIndex * 100}%)` }}
+                >
+                  {products.map((product, index) => (
+                    <div key={product.id} className="carousel-slide">
+                      <ProductCard product={product} index={index} />
+                    </div>
+                  ))}
+                </div>
               </div>
-            ))}
-          </div>
+
+              <button
+                className="carousel-btn carousel-btn-next"
+                onClick={goToNext}
+                aria-label="Next product"
+              >
+                &#8250;
+              </button>
+            </div>
+
+            {products.length > 1 && (
+              <div className="carousel-dots">
+                {products.map((_, index) => (
+                  <button
+                    key={index}
+                    className={`carousel-dot${index === currentIndex ? ' active' : ''}`}
+                    onClick={() => setCurrentIndex(index)}
+                    aria-label={`Go to product ${index + 1}`}
+                  />
+                ))}
+              </div>
+            )}
+          </>
         )}
       </div>
     </section>

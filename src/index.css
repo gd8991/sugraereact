@@ -800,10 +800,6 @@ nav {
     color: var(--pure-black);
 }
 
-.founder-content {
-    opacity: 0;
-    transform: translateX(50px);
-}
 
 .section-label {
     font-size: 0.75rem;

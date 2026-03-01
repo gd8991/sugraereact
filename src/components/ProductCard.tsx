@@ -26,6 +26,13 @@ const ProductCard: FC<ProductCardProps> = ({ product }) => {
     if (window.ScrollTrigger) {
       window.ScrollTrigger.getAll().forEach((st: any) => st.kill(true));
     }
+    // Reset scroll position before navigation so the product page starts at the top.
+    // Use Lenis if available (to sync its internal state), otherwise fall back to native.
+    if (window.lenis) {
+      window.lenis.scrollTo(0, { immediate: true });
+    } else {
+      window.scrollTo(0, 0);
+    }
     navigate(`/product/${product.id}`);
   };
 

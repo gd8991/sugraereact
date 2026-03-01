@@ -9,7 +9,8 @@
       "Bash(timeout 15 npm run dev)",
       "Bash(timeout 10 npm run dev)",
       "Bash(node:*)",
-      "Bash(git stash:*)"
+      "Bash(git stash:*)",
+      "Bash(npm info:*)"
     ],
     "deny": [],
     "ask": []

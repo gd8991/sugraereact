@@ -206,14 +206,14 @@ header {
     left: 0;
     right: 0;
     z-index: 1000;
-    padding: 2rem 4rem;
+    padding: 1.4rem 4rem;
     background: #f0ebe3;
     transition: var(--transition);
 }
 
 header.scrolled {
     background: #f0ebe3;
-    padding: 1rem 4rem;
+    padding: 0.7rem 4rem;
 }
 
 nav {

@@ -72,19 +72,6 @@ const Hero: FC = () => {
       ease: 'power3.out'
     });
 
-    // Background parallax — moves at normal speed (slides up fully)
-    const bgParallax = g.to(videoRef.current, {
-      scrollTrigger: {
-        trigger: heroRef.current,
-        start: 'top top',
-        end: 'bottom top',
-        scrub: 1
-      },
-      y: 100,
-      ease: 'none'
-    });
-    tweens.push(bgParallax);
-
     // Content parallax — moves at 1/3 the scroll speed.
     // When the hero section scrolls 100vh out of view, content only travels
     // ~33% of that distance, so it "lingers" and the next section slides over it.
@@ -128,15 +115,14 @@ const Hero: FC = () => {
   };
 
   return (
-    <section ref={heroRef} className="hero" id="home">
-      {/* Video Background */}
-      <div ref={videoRef} className="hero-video">
-        <img
-          src={heroImg}
-          alt=""
-          className="video-element"
-        />
-      </div>
+    <section
+      ref={heroRef}
+      className="hero"
+      id="home"
+      style={{ backgroundImage: `url(${heroImg})` }}
+    >
+      {/* Overlay */}
+      <div ref={videoRef} className="hero-video" />
 
       <div className="floating-particles" id="particles">
         <FloatingParticles />
@@ -149,7 +135,7 @@ const Hero: FC = () => {
         </h1>
 
         <p ref={taglineRef} className="hero-tagline">
-          Where Love Meets Luxury
+          Experience Luxury
         </p>
 
         <div ref={ctaGroupRef} className="hero-cta-group">

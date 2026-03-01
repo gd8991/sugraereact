@@ -96,9 +96,8 @@ const GuestCheckout: FC = () => {
 
   if (orderComplete) {
     return (
-      <>
-        <div ref={overlayRef} className="checkout-overlay" />
-        <div ref={modalRef} className="checkout-modal">
+      <div ref={overlayRef} className="checkout-overlay">
+        <div ref={modalRef} className="checkout-modal" onClick={e => e.stopPropagation()}>
           <div className="order-success">
             <div className="success-icon">✨</div>
             <h2 className="success-title">Order Complete!</h2>
@@ -110,19 +109,17 @@ const GuestCheckout: FC = () => {
             </div>
           </div>
         </div>
-      </>
+      </div>
     );
   }
 
   return (
-    <>
-      <div
-        ref={overlayRef}
-        className="checkout-overlay"
-        onClick={closeCheckout}
-      />
-
-      <div ref={modalRef} className="checkout-modal">
+    <div
+      ref={overlayRef}
+      className="checkout-overlay"
+      onClick={closeCheckout}
+    >
+      <div ref={modalRef} className="checkout-modal" onClick={e => e.stopPropagation()}>
         <div className="checkout-header">
           <h2 className="checkout-title">Guest Checkout</h2>
           <button onClick={closeCheckout} className="checkout-close">×</button>
@@ -288,7 +285,7 @@ const GuestCheckout: FC = () => {
           </form>
         </div>
       </div>
-    </>
+    </div>
   );
 };
 
